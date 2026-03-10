@@ -6,7 +6,7 @@
 # Title: **Autonomous Chasing Creature**
 
 ## Project Idea
-This project involves creating a 3D game where a **creature autonomously chases** an AI player in an environment. The AI player will try to avoid capture, while the creature follows using basic AI behaviors. The goal is to create a dynamic system where both entities act autonomously, with animated movements and sound effects to enhance the chase.
+This project involves creating a 3D environment where a **creature autonomously chases** an AI player in an environment. The AI player will try to avoid capture, while the creature follows using basic AI behaviors. The goal is to create a dynamic system where both entities act autonomously, with animated movements and sound effects to enhance the chase.
 
 ## Project Goals
 Create a 3D environment where the AI player is autonomously chased by a creature. The AI will avoid the creature while the creature will pursue it. The project will focus on creating an engaging chase with basic AI behaviors and immersive sound and animations. The player’s role is to observe the chase without direct interaction.
