@@ -13,19 +13,19 @@ Create a 3D environment where the AI player is autonomously chased by a creature
 
 ## Key Features
 
-- **Behavior Trees**: Define the creature’s decision-making, such as when to start chasing and how to react when it loses sight of the player.
-  
-- **Finite State Machine (FSM)**: Manages the creature’s and AI player’s states (idle, chasing, hiding, running).
-  
-- **Steering Behaviors**: The creature uses **Seek** to chase, while the AI uses **Avoidance** to escape.
+- **Autonomy & Personality**: Both the creature and AI player act based on proximity and environmental factors, with the creature showing persistent chasing behavior and the AI reacting (running, hiding, etc.).
 
-- **Procedural Animations**: Animations for natural movements like running, hiding, and chasing.
-  
-- **Autonomy & Personality**: Both entities act based on proximity and environment, with the creature showing persistent chasing behavior and the AI reacting (running, hiding).
+- **Steering Behaviors**: The creature uses **Seek** to autonomously chase the AI player, while the AI uses **Avoidance** to escape or hide when it gets too close.
 
-- **Sound Design**: Spatialized audio for growls, footsteps, and breath sounds to enhance the chase experience.
-  
-- **AI Interactions**: The AI player reacts to the creature by running or hiding, while the creature adapts to the player’s movements.
+- **Finite State Machine (FSM)**: Manages the creature’s and AI player’s states, such as idle, chasing, hiding, and running. 
+
+- **Behavior Trees**: Define the creature’s decision-making process, such as when to start chasing, how to react when it loses sight of the player, and how it behaves when it catches the AI.
+
+- **Procedural Animations**: Smooth animations for natural movements like running, hiding, and chasing, making both the creature and AI player feel alive.
+
+- **Sound Design**: Spatialized audio enhances immersion, with growls, footsteps, and breath sounds dynamically changing as the creature gets closer.
+
+- **AI Interactions**: The AI player reacts to the creature’s presence by running or hiding, while the creature adapts its behavior based on the AI player’s movements.
 
 ## Gameplay
 
