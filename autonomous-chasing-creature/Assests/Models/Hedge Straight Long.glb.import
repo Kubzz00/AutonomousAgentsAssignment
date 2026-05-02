@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://btrf2qri3326m"
-path="res://.godot/imported/Gazebo.glb-c9a1f4ee50807fc898e00fc6fb3f85a2.scn"
+uid="uid://bre64s7caramm"
+path="res://.godot/imported/Hedge Straight Long.glb-2a47e9cbfed76b1df77c23f6cca93bbd.scn"
 
 [deps]
 
-source_file="res://Assests/Models/Gazebo.glb"
-dest_files=["res://.godot/imported/Gazebo.glb-c9a1f4ee50807fc898e00fc6fb3f85a2.scn"]
+source_file="res://Assests/Models/Hedge Straight Long.glb"
+dest_files=["res://.godot/imported/Hedge Straight Long.glb-2a47e9cbfed76b1df77c23f6cca93bbd.scn"]
 
 [params]
 
