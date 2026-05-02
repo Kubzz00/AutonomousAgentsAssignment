@@ -7,4 +7,4 @@ func _process(delta: float) -> void:
 	if not enabled:
 		return
 		
-	rotation_degrees.y += rotation_speed_degrees * delta
+	rotation_degrees.y += rotation_speed_degrees * delta # Rotates the area
