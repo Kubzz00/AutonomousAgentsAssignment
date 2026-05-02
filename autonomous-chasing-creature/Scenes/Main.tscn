@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://cq60uy4oj7r4p"]
+
+[ext_resource type="PackedScene" uid="uid://cjbc6g3wo5iuq" path="res://Scenes/XR/XRObserverRig.tscn" id="1_r150o"]
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="2_idj7w"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_idj7w"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_kln2b"]
+sky_material = SubResource("ProceduralSkyMaterial_idj7w")
+
+[sub_resource type="Environment" id="Environment_rgh2o"]
+background_mode = 2
+background_color = Color(0, 0, 0, 0)
+sky = SubResource("Sky_kln2b")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_idj7w"]
+
+[node name="Main" type="Node3D" unique_id=955964801]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1068983022]
+environment = SubResource("Environment_rgh2o")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2105999343]
+transform = Transform3D(1, 0, 0, 0, 0.03264927, 0.9994669, 0, -0.9994669, 0.03264927, 0, 4.085877, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=501561503]
+transform = Transform3D(5, 0, 0, 0, 0.2, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("PlaneMesh_idj7w")
+
+[node name="StartXR" parent="." unique_id=1297519848 instance=ExtResource("2_idj7w")]
+
+[node name="XRObserverRig" parent="." unique_id=1696742314 instance=ExtResource("1_r150o")]
