@@ -50,6 +50,7 @@ glow_enabled = true
 [node name="Main" type="Node3D" unique_id=955964801]
 
 [node name="XRObserverRig" parent="." unique_id=1696742314 instance=ExtResource("1_r150o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2369478, 2.03941)
 
 [node name="Park" type="Node3D" parent="." unique_id=869343277]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -2.5)
