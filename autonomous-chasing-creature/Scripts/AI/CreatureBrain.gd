@@ -12,10 +12,6 @@ extends CharacterBody3D
 var target: Node3D = null
 var can_see_player: bool = false
 
-# 🔥 MEMORY SYSTEM (KEY FIX)
-var chase_memory_time: float = 1.5
-var chase_timer: float = 0.0
-
 @onready var raycast: RayCast3D = $RayCast3D
 
 # Wander
@@ -36,19 +32,19 @@ func _physics_process(delta):
 	if target == null:
 		target = get_node_or_null(target_path)
 		return
-	
+		
+	print("TARGET POS:", target.global_position)
 	update_los()
-	update_memory(delta)
 	
 	var desired_velocity = Vector3.ZERO
 	
-	# 🔥 CLEAR BEHAVIOR SWITCH
-	if is_chasing():
+	if can_see_player:
 		desired_velocity = chase_player()
+		print("CHASING")
 	else:
 		desired_velocity = wander(delta)
+		print("WANDERING")
 	
-	# Smooth movement
 	velocity.x = move_toward(velocity.x, desired_velocity.x, acceleration * delta)
 	velocity.z = move_toward(velocity.z, desired_velocity.z, acceleration * delta)
 	
@@ -58,30 +54,11 @@ func _physics_process(delta):
 
 
 # ======================
-# 🔥 CHASE STATE CHECK
-# ======================
-func is_chasing():
-	return can_see_player or chase_timer > 0.0
-
-
-func update_memory(delta):
-	if can_see_player:
-		chase_timer = chase_memory_time
-	else:
-		chase_timer -= delta
-
-
-# ======================
 # 🔴 CHASE
 # ======================
 func chase_player():
-	var distance = global_position.distance_to(target.global_position)
-	
-	# 🔥 STOP when close enough
-	if distance <= stop_distance:
-		return Vector3.ZERO
-	
-	return SteeringController.seek(global_position, target.global_position, chase_speed)
+	var direction = (target.global_position - global_position).normalized()
+	return direction * chase_speed
 
 
 # ======================
@@ -126,19 +103,9 @@ func update_los():
 	
 	if raycast.is_colliding():
 		var hit = raycast.get_collider()
-		
-		if hit == target:
-			can_see_player = true
-		else:
-			can_see_player = false
+		can_see_player = (hit == target)
 	else:
 		can_see_player = false
-	
-	# 🔥 DEBUG (VERY IMPORTANT)
-	if can_see_player:
-		print("SEE PLAYER")
-	else:
-		print("NO SIGHT")
 
 
 # ======================
