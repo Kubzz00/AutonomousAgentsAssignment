@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://hwavodk3la5p"]
+
+[ext_resource type="PackedScene" uid="uid://y3hrvsorpy0x" path="res://Assests/Animations/Breathing Idle.fbx" id="1_0650h"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o2x2e"]
+radius = 0.32714844
+height = 1.8366699
+
+[node name="PlayerAgent" type="CharacterBody3D" unique_id=1156323180]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1197627951]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0040899124, 0.8700503, 0.0051107407)
+shape = SubResource("CapsuleShape3D_o2x2e")
+
+[node name="ModelHolder" type="Node3D" parent="." unique_id=783199352]
+
+[node name="PlayerModel" parent="ModelHolder" unique_id=1011530176 instance=ExtResource("1_0650h")]
