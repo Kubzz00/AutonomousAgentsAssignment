@@ -6,7 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://b37gcpvq6pyv8" path="res://Assests/Models/Bench.glb" id="2_jw32o"]
 [ext_resource type="PackedScene" uid="uid://cjjgwjlsosucc" path="res://Assests/Models/Fountain.glb" id="3_50glp"]
 [ext_resource type="PackedScene" uid="uid://bre64s7caramm" path="res://Assests/Models/Hedge Straight Long.glb" id="3_rgh2o"]
+[ext_resource type="Script" uid="uid://bf45tbp4laxgn" path="res://Scripts/Systems/SpawnManager.gd" id="3_vy5pj"]
+[ext_resource type="PackedScene" uid="uid://bd7x7isx0isqd" path="res://Scenes/Agents/Creature/Creature.tscn" id="4_4kpch"]
 [ext_resource type="PackedScene" uid="uid://sll6tdr0h5nk" path="res://Assests/Models/Gazebo.glb" id="4_vy5pj"]
+[ext_resource type="PackedScene" uid="uid://hwavodk3la5p" path="res://Scenes/Agents/Player/PlayerAgent.tscn" id="5_grg3l"]
 [ext_resource type="PackedScene" uid="uid://byeyfbl8vycck" path="res://Assests/Models/Bush.glb" id="6_jw32o"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgh2o"]
@@ -59,6 +62,9 @@ script = ExtResource("2_50glp")
 rotation_speed_degrees = 8.0
 
 [node name="Park" type="Node3D" parent="ArenaRotator" unique_id=869343277]
+script = ExtResource("3_vy5pj")
+creature_scene = ExtResource("4_4kpch")
+player_scene = ExtResource("5_grg3l")
 
 [node name="Platform" type="StaticBody3D" parent="ArenaRotator/Park" unique_id=286951735]
 
@@ -633,8 +639,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05557263, 0)
 [node name="SpawnPoints" type="Node3D" parent="ArenaRotator/Park" unique_id=1509491440]
 
 [node name="CreatureSpawn" type="Marker3D" parent="ArenaRotator/Park/SpawnPoints" unique_id=672405478]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9345326, 0.12468457, 2.9004412)
 
 [node name="PlayerSpawn" type="Marker3D" parent="ArenaRotator/Park/SpawnPoints" unique_id=262261694]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.042908907, 0.14212441, -2.7066398)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1068983022]
 environment = SubResource("Environment_rgh2o")
