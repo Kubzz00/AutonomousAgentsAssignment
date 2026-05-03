@@ -8,6 +8,7 @@ radius = 0.045410156
 height = 0.38763428
 
 [node name="PlayerAgent" type="CharacterBody3D" unique_id=1156323180]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 script = ExtResource("2_o2x2e")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1197627951]
@@ -15,6 +16,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0040899124, 0.16890895, 0.0
 shape = SubResource("CapsuleShape3D_o2x2e")
 
 [node name="ModelHolder" type="Node3D" parent="." unique_id=783199352]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(-0.2, 0, -1.7484556e-08, 0, 0.2, 0, 1.7484556e-08, 0, -0.2, 0, 0, 0)
 
 [node name="PlayerModel" parent="ModelHolder" unique_id=1011530176 instance=ExtResource("1_0650h")]
