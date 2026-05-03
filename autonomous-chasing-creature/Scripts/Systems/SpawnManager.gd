@@ -9,6 +9,7 @@ extends Node3D
 var creature_instance: CharacterBody3D
 var player_instance: CharacterBody3D
 
+
 func _ready() -> void:
 	spawn_agents()
 
@@ -28,13 +29,16 @@ func spawn_agents() -> void:
 	add_child(creature_instance)
 	add_child(player_instance)
 	
-	# Because SpawnManager is on Park and spawns are inside Park,
-	# use LOCAL transforms.
+	# Because SpawnManager is attached to Park and spawn markers are inside Park,
+	# use local transforms.
 	creature_instance.transform = creature_spawn.transform
 	player_instance.transform = player_spawn.transform
 	
-	# Link after both exist.
+	# Creature needs to know who to chase.
 	creature_instance.target_path = creature_instance.get_path_to(player_instance)
+	
+	# Player needs to know which creature to react to.
+	player_instance.creature_path = player_instance.get_path_to(creature_instance)
 	
 	print("Creature spawned at: ", creature_instance.position)
 	print("Player spawned at: ", player_instance.position)

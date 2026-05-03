@@ -4,8 +4,8 @@ extends CharacterBody3D
 
 # Movement
 @export var walk_speed: float = 0.7
-@export var chase_speed: float = 1.8
-@export var acceleration: float = 2.5
+@export var chase_speed: float = 1.2
+@export var acceleration: float = 1.2
 @export var gravity: float = 9.8
 @export var stop_distance: float = 0.35
 
