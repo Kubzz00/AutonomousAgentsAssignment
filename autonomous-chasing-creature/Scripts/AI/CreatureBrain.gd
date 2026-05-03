@@ -3,30 +3,36 @@ extends CharacterBody3D
 @export var target_path: NodePath
 
 # Movement
-@export var walk_speed: float = 0.7
-@export var chase_speed: float = 1.2
-@export var acceleration: float = 1.2
+@export var walk_speed: float = 0.45
+@export var chase_speed: float = 1.15
+@export var acceleration: float = 1.8
 @export var gravity: float = 9.8
-@export var stop_distance: float = 0.35
+@export var stop_distance: float = 0.45
 
 # Park bounds
-@export var park_min_x: float = -3.0
-@export var park_max_x: float = 3.0
-@export var park_min_z: float = -3.0
-@export var park_max_z: float = 3.0
+# Platform scale is 7x7, so edge is about -3.5 to +3.5.
+# Use -3 to +3 as safe playable area inside the bush border.
+@export var park_min_x: float = -2.5
+@export var park_max_x: float = 2.5
+@export var park_min_z: float = -2.5
+@export var park_max_z: float = 2.5
+
+# Wander tuning
+@export var wander_target_margin: float = 0.25
+@export var wander_retarget_min_time: float = 3.0
+@export var wander_retarget_max_time: float = 6.0
 
 # LOS/debug
 @export var debug_los: bool = true
-
-# Lower these if the ray is seeing over bushes.
-@export var eye_height: float = 0.3
-@export var target_height: float = 0.3
+@export var eye_height: float = 0.45
+@export var target_height: float = 0.45
 
 var target: Node3D = null
 var can_see_player: bool = false
 var current_state: String = "WANDER"
 
 var wander_target: Vector3 = Vector3.ZERO
+var wander_retarget_timer: float = 0.0
 
 @onready var raycast: RayCast3D = $RayCast3D
 @onready var los_debug_line: MeshInstance3D = $LOSDebugLine
@@ -61,7 +67,7 @@ func _physics_process(delta: float) -> void:
 		desired_velocity = chase_player()
 	else:
 		current_state = "WANDER"
-		desired_velocity = wander()
+		desired_velocity = wander(delta)
 
 	velocity.x = move_toward(velocity.x, desired_velocity.x, acceleration * delta)
 	velocity.z = move_toward(velocity.z, desired_velocity.z, acceleration * delta)
@@ -95,25 +101,29 @@ func chase_player() -> Vector3:
 # ======================
 # WANDER
 # ======================
-func wander() -> Vector3:
-	if global_position.distance_to(wander_target) < 0.45:
+func wander(delta: float) -> Vector3:
+	wander_retarget_timer -= delta
+
+	var distance_to_target := global_position.distance_to(wander_target)
+
+	if distance_to_target < 0.5 or wander_retarget_timer <= 0.0:
 		pick_new_wander_target()
 
 	var direction := wander_target - global_position
 	direction.y = 0.0
 
 	if direction.length() < 0.05:
-		pick_new_wander_target()
 		return Vector3.ZERO
 
 	return direction.normalized() * walk_speed
 
 
 func pick_new_wander_target() -> void:
-	var x := randf_range(park_min_x, park_max_x)
-	var z := randf_range(park_min_z, park_max_z)
+	var x := randf_range(park_min_x + wander_target_margin, park_max_x - wander_target_margin)
+	var z := randf_range(park_min_z + wander_target_margin, park_max_z - wander_target_margin)
 
 	wander_target = Vector3(x, global_position.y, z)
+	wander_retarget_timer = randf_range(wander_retarget_min_time, wander_retarget_max_time)
 
 
 # ======================
