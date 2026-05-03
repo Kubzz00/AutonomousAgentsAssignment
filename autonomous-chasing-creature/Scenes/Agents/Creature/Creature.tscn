@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://bd7x7isx0isqd"]
 
 [ext_resource type="PackedScene" uid="uid://y3hrvsorpy0x" path="res://Assests/Animations/Breathing Idle.fbx" id="1_0px12"]
+[ext_resource type="Script" uid="uid://dv2s2j1rnufnr" path="res://Scripts/AI/CreatureBrain.gd" id="1_bmkl7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bmkl7"]
 radius = 0.044921875
 height = 0.36387634
 
 [node name="Creature" type="CharacterBody3D" unique_id=656889878]
+script = ExtResource("1_bmkl7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1297635283]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021995008, 0.17388487, 0.02935791)
