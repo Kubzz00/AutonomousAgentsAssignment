@@ -3,7 +3,7 @@ extends CharacterBody3D
 @export var creature_path: NodePath
 
 # Movement
-@export var walk_speed: float = 0.55
+@export var walk_speed: float = 0.2
 @export var flee_speed: float = 1.45
 @export var acceleration: float = 1.8
 @export var gravity: float = 9.8
@@ -101,7 +101,7 @@ func handle_idle() -> Vector3:
 # ======================
 # WALK / WANDER
 # ======================
-func handle_walk(delta: float) -> Vector3:
+func handle_walk(_delta: float) -> Vector3:
 	if state_timer <= 0.0:
 		switch_to_idle()
 		return Vector3.ZERO

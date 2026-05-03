@@ -2,39 +2,53 @@ extends CharacterBody3D
 
 @export var target_path: NodePath
 
-# Movement
-@export var walk_speed: float = 0.45
-@export var chase_speed: float = 1.15
-@export var acceleration: float = 1.8
+# ======================
+# MOVEMENT
+# ======================
+@export var walk_speed: float = 0.4
+@export var chase_speed: float = 1.2
+@export var acceleration: float = 1.5
 @export var gravity: float = 9.8
 @export var stop_distance: float = 0.45
 
-# Park bounds
-# Platform scale is 7x7, so edge is about -3.5 to +3.5.
-# Use -3 to +3 as safe playable area inside the bush border.
+# ======================
+# PARK BOUNDS
+# ======================
 @export var park_min_x: float = -2.5
 @export var park_max_x: float = 2.5
 @export var park_min_z: float = -2.5
 @export var park_max_z: float = 2.5
 
-# Wander tuning
-@export var wander_target_margin: float = 0.25
-@export var wander_retarget_min_time: float = 3.0
-@export var wander_retarget_max_time: float = 6.0
+# ======================
+# WANDER / IDLE
+# ======================
+@export var idle_min_time: float = 0.25
+@export var idle_max_time: float = 0.55
+@export var walk_min_time: float = 2.0
+@export var walk_max_time: float = 4.0
 
-# LOS/debug
+# ======================
+# LOS / DEBUG
+# ======================
 @export var debug_los: bool = true
-@export var eye_height: float = 0.45
-@export var target_height: float = 0.45
+@export var eye_height: float = 0.2
+@export var target_height: float = 0.2
+@export var los_collision_mask: int = 1
+
+enum State {
+	IDLE,
+	WANDER,
+	CHASE
+}
+
+var state: State = State.WANDER
 
 var target: Node3D = null
 var can_see_player: bool = false
-var current_state: String = "WANDER"
 
-var wander_target: Vector3 = Vector3.ZERO
-var wander_retarget_timer: float = 0.0
+var state_timer: float = 0.0
+var wander_direction: Vector3 = Vector3.ZERO
 
-@onready var raycast: RayCast3D = $RayCast3D
 @onready var los_debug_line: MeshInstance3D = $LOSDebugLine
 
 var los_mesh := ImmediateMesh.new()
@@ -48,9 +62,10 @@ func _ready() -> void:
 	los_seen_material.albedo_color = Color(0.0, 1.0, 0.0, 1.0)
 	los_blocked_material.albedo_color = Color(1.0, 0.0, 0.0, 1.0)
 
-	los_debug_line.mesh = los_mesh
+	if los_debug_line:
+		los_debug_line.mesh = los_mesh
 
-	pick_new_wander_target()
+	switch_to_wander()
 
 
 func _physics_process(delta: float) -> void:
@@ -63,21 +78,62 @@ func _physics_process(delta: float) -> void:
 	var desired_velocity := Vector3.ZERO
 
 	if can_see_player:
-		current_state = "CHASE"
+		state = State.CHASE
 		desired_velocity = chase_player()
 	else:
-		current_state = "WANDER"
-		desired_velocity = wander(delta)
+		match state:
+			State.IDLE:
+				desired_velocity = handle_idle(delta)
+			State.WANDER:
+				desired_velocity = handle_wander(delta)
+			State.CHASE:
+				switch_to_wander()
+				desired_velocity = handle_wander(delta)
 
 	velocity.x = move_toward(velocity.x, desired_velocity.x, acceleration * delta)
 	velocity.z = move_toward(velocity.z, desired_velocity.z, acceleration * delta)
 
 	apply_gravity(delta)
 	move_and_slide()
+
 	rotate_to_velocity()
 
 	if debug_los:
 		update_los_debug_line()
+
+
+# ======================
+# STATE SWITCHING
+# ======================
+func switch_to_idle() -> void:
+	state = State.IDLE
+	state_timer = randf_range(idle_min_time, idle_max_time)
+
+
+func switch_to_wander() -> void:
+	state = State.WANDER
+	state_timer = randf_range(walk_min_time, walk_max_time)
+
+	wander_direction = Vector3(
+		randf_range(-1.0, 1.0),
+		0.0,
+		randf_range(-1.0, 1.0)
+	).normalized()
+
+	if wander_direction.length() < 0.05:
+		wander_direction = Vector3.FORWARD
+
+
+# ======================
+# IDLE
+# ======================
+func handle_idle(delta: float) -> Vector3:
+	state_timer -= delta
+
+	if state_timer <= 0.0:
+		switch_to_wander()
+
+	return Vector3.ZERO
 
 
 # ======================
@@ -99,62 +155,125 @@ func chase_player() -> Vector3:
 
 
 # ======================
-# WANDER
+# NORMAL WANDER
 # ======================
-func wander(delta: float) -> Vector3:
-	wander_retarget_timer -= delta
+func handle_wander(delta: float) -> Vector3:
+	state_timer -= delta
 
-	var distance_to_target := global_position.distance_to(wander_target)
-
-	if distance_to_target < 0.5 or wander_retarget_timer <= 0.0:
-		pick_new_wander_target()
-
-	var direction := wander_target - global_position
-	direction.y = 0.0
-
-	if direction.length() < 0.05:
+	if state_timer <= 0.0:
+		switch_to_idle()
 		return Vector3.ZERO
 
-	return direction.normalized() * walk_speed
+	var edge_push := get_edge_push()
+	var obstacle_push := get_obstacle_push()
 
+	var noise := Vector3(
+		randf_range(-0.12, 0.12),
+		0.0,
+		randf_range(-0.12, 0.12)
+	)
 
-func pick_new_wander_target() -> void:
-	var x := randf_range(park_min_x + wander_target_margin, park_max_x - wander_target_margin)
-	var z := randf_range(park_min_z + wander_target_margin, park_max_z - wander_target_margin)
+	var final_dir := wander_direction + edge_push + obstacle_push + noise
 
-	wander_target = Vector3(x, global_position.y, z)
-	wander_retarget_timer = randf_range(wander_retarget_min_time, wander_retarget_max_time)
+	if final_dir.length() < 0.05:
+		switch_to_wander()
+		return Vector3.ZERO
+
+	wander_direction = final_dir.normalized()
+
+	return wander_direction * walk_speed
 
 
 # ======================
-# LOS
+# EDGE AVOIDANCE
+# ======================
+func get_edge_push() -> Vector3:
+	var push := Vector3.ZERO
+	var margin := 0.8
+
+	if global_position.x < park_min_x + margin:
+		push.x += 1.0
+	elif global_position.x > park_max_x - margin:
+		push.x -= 1.0
+
+	if global_position.z < park_min_z + margin:
+		push.z += 1.0
+	elif global_position.z > park_max_z - margin:
+		push.z -= 1.0
+
+	return push
+
+
+# ======================
+# OBSTACLE PUSH
+# ======================
+func get_obstacle_push() -> Vector3:
+	var push := Vector3.ZERO
+
+	for i in range(get_slide_collision_count()):
+		var collision := get_slide_collision(i)
+
+		if collision == null:
+			continue
+
+		var collider := collision.get_collider()
+
+		if collider == null:
+			continue
+
+		if collider.name == "Platform":
+			continue
+
+		var normal := collision.get_normal()
+		normal.y = 0.0
+
+		if normal.length() > 0.05:
+			push += normal.normalized() * 1.4
+
+	return push
+
+
+# ======================
+# LOS USING DIRECT PHYSICS RAY
 # ======================
 func update_los() -> void:
-	var origin := global_position + Vector3.UP * eye_height
-	var target_pos := target.global_position + Vector3.UP * target_height
+	var start_pos := global_position + Vector3.UP * eye_height
+	var end_pos := target.global_position + Vector3.UP * target_height
 
-	raycast.global_position = origin
-	raycast.target_position = raycast.to_local(target_pos)
-	raycast.force_raycast_update()
+	var query := PhysicsRayQueryParameters3D.create(start_pos, end_pos)
+	query.collision_mask = los_collision_mask
+	query.exclude = [self.get_rid()]
 
-	if raycast.is_colliding():
-		var hit := raycast.get_collider()
-		can_see_player = hit == target
-	else:
+	var result := get_world_3d().direct_space_state.intersect_ray(query)
+
+	if result.is_empty():
 		can_see_player = false
+		return
+
+	var hit_collider = result["collider"]
+	can_see_player = hit_collider == target
 
 
 # ======================
 # DEBUG LOS LINE
 # ======================
 func update_los_debug_line() -> void:
+	if los_debug_line == null:
+		return
+
 	los_mesh.clear_surfaces()
 
 	var start_global := global_position + Vector3.UP * eye_height
 	var end_global := target.global_position + Vector3.UP * target_height
 
-	if raycast.is_colliding():
-		end_global = raycast.get_collision_point()
+	var query := PhysicsRayQueryParameters3D.create(start_global, end_global)
+	query.collision_mask = los_collision_mask
+	query.exclude = [self.get_rid()]
+
+	var result := get_world_3d().direct_space_state.intersect_ray(query)
+
+	if not result.is_empty():
+		end_global = result["position"]
 
 	var start_local := los_debug_line.to_local(start_global)
 	var end_local := los_debug_line.to_local(end_global)

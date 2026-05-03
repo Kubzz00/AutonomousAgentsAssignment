@@ -639,10 +639,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05557263, 0)
 [node name="SpawnPoints" type="Node3D" parent="ArenaRotator/Park" unique_id=1509491440]
 
 [node name="CreatureSpawn" type="Marker3D" parent="ArenaRotator/Park/SpawnPoints" unique_id=672405478]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6852045, 1.9999998, 2.5999887)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6852045, 0.13883924, 2.5999887)
 
 [node name="PlayerSpawn" type="Marker3D" parent="ArenaRotator/Park/SpawnPoints" unique_id=262261694]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0033267736, 1.9999998, -2.4273372)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8354254, 0.13642693, -2.8869433)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1068983022]
 environment = SubResource("Environment_rgh2o")
