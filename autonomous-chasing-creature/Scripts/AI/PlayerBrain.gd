@@ -4,15 +4,16 @@ extends CharacterBody3D
 
 # Movement
 @export var walk_speed: float = 0.3
-@export var flee_speed: float = 1.45
-@export var acceleration: float = 1.8
+@export var flee_speed: float = 1.35
+@export var acceleration: float = 1.4
+@export var turn_smoothing: float = 2.0
 @export var gravity: float = 9.8
 
 # Park bounds
-@export var park_min_x: float = -3.0
-@export var park_max_x: float = 3.0
-@export var park_min_z: float = -3.0
-@export var park_max_z: float = 3.0
+@export var park_min_x: float = -2.5
+@export var park_max_x: float = 2.5
+@export var park_min_z: float = -2.5
+@export var park_max_z: float = 2.5
 
 enum State {
 	IDLE,
@@ -26,6 +27,7 @@ var state_timer: float = 0.0
 
 var creature: Node3D = null
 var move_direction: Vector3 = Vector3.ZERO
+var desired_direction: Vector3 = Vector3.ZERO
 var is_caught: bool = false
 
 
@@ -51,7 +53,7 @@ func _physics_process(delta: float) -> void:
 
 	if is_seen_by_creature():
 		state = State.FLEE
-		desired_velocity = flee_from_creature()
+		desired_velocity = flee_from_creature(delta)
 	else:
 		state_timer -= delta
 
@@ -59,10 +61,10 @@ func _physics_process(delta: float) -> void:
 			State.IDLE:
 				desired_velocity = handle_idle()
 			State.WALK:
-				desired_velocity = handle_walk()
+				desired_velocity = handle_walk(delta)
 			State.FLEE:
 				switch_to_walk()
-				desired_velocity = handle_walk()
+				desired_velocity = handle_walk(delta)
 			State.CAUGHT:
 				desired_velocity = Vector3.ZERO
 
@@ -74,7 +76,6 @@ func _physics_process(delta: float) -> void:
 	rotate_to_velocity()
 
 
-# Called by CreatureBrain when captured.
 func on_caught() -> void:
 	is_caught = true
 	state = State.CAUGHT
@@ -97,21 +98,24 @@ func is_seen_by_creature() -> bool:
 # ======================
 # FLEE
 # ======================
-func flee_from_creature() -> Vector3:
+func flee_from_creature(delta: float) -> Vector3:
 	var away := global_position - creature.global_position
 	away.y = 0.0
 
 	if away.length() < 0.05:
-		away = Vector3(
-			randf_range(-1.0, 1.0),
-			0.0,
-			randf_range(-1.0, 1.0)
-		)
+		away = Vector3.FORWARD
 
 	var edge_push := get_edge_push()
-	var final_dir := (away.normalized() + edge_push).normalized()
+	var target_dir := (away.normalized() + edge_push).normalized()
 
-	return final_dir * flee_speed
+	move_direction = move_direction.lerp(target_dir, turn_smoothing * delta)
+
+	if move_direction.length() < 0.05:
+		move_direction = target_dir
+
+	move_direction = move_direction.normalized()
+
+	return move_direction * flee_speed
 
 
 # ======================
@@ -127,41 +131,44 @@ func handle_idle() -> Vector3:
 # ======================
 # WALK / WANDER
 # ======================
-func handle_walk() -> Vector3:
+func handle_walk(delta: float) -> Vector3:
 	if state_timer <= 0.0:
 		switch_to_idle()
 		return Vector3.ZERO
 
 	var edge_push := get_edge_push()
+	var target_dir := (desired_direction + edge_push).normalized()
 
-	var noise := Vector3(
-		randf_range(-0.10, 0.10),
-		0.0,
-		randf_range(-0.10, 0.10)
-	)
+	move_direction = move_direction.lerp(target_dir, turn_smoothing * delta)
 
-	var final_dir := (move_direction + edge_push + noise).normalized()
+	if move_direction.length() < 0.05:
+		move_direction = target_dir
 
-	return final_dir * walk_speed
+	move_direction = move_direction.normalized()
+
+	return move_direction * walk_speed
 
 
 func switch_to_walk() -> void:
 	state = State.WALK
-	state_timer = randf_range(2.5, 5.0)
+	state_timer = randf_range(3.0, 5.5)
 
-	move_direction = Vector3(
+	desired_direction = Vector3(
 		randf_range(-1.0, 1.0),
 		0.0,
 		randf_range(-1.0, 1.0)
 	).normalized()
 
+	if desired_direction.length() < 0.05:
+		desired_direction = Vector3.FORWARD
+
 	if move_direction.length() < 0.05:
-		move_direction = Vector3.FORWARD
+		move_direction = desired_direction
 
 
 func switch_to_idle() -> void:
 	state = State.IDLE
-	state_timer = randf_range(0.8, 1.8)
+	state_timer = randf_range(0.7, 1.5)
 
 
 # ======================
@@ -201,4 +208,5 @@ func rotate_to_velocity() -> void:
 	var flat_velocity := Vector3(velocity.x, 0.0, velocity.z)
 
 	if flat_velocity.length() > 0.1:
-		look_at(global_position + flat_velocity, Vector3.UP)
+		var target_position := global_position + flat_velocity
+		look_at(target_position, Vector3.UP)

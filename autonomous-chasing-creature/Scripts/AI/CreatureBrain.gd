@@ -7,7 +7,8 @@ extends CharacterBody3D
 # ======================
 @export var walk_speed: float = 0.4
 @export var chase_speed: float = 1.2
-@export var acceleration: float = 1.1
+@export var acceleration: float = 1.2
+@export var turn_smoothing: float = 2.0
 @export var gravity: float = 9.8
 
 # Catching
@@ -25,9 +26,9 @@ extends CharacterBody3D
 # WANDER / IDLE
 # ======================
 @export var idle_min_time: float = 0.25
-@export var idle_max_time: float = 0.55
-@export var walk_min_time: float = 2.0
-@export var walk_max_time: float = 4.0
+@export var idle_max_time: float = 0.65
+@export var walk_min_time: float = 3.0
+@export var walk_max_time: float = 5.5
 
 # ======================
 # LOS / DEBUG
@@ -35,7 +36,7 @@ extends CharacterBody3D
 @export var debug_los: bool = true
 @export var eye_height: float = 0.2
 @export var target_height: float = 0.2
-@export var vision_range: float = 4.5
+@export var vision_range: float = 4.0
 @export var los_collision_mask: int = 1
 
 enum State {
@@ -52,7 +53,8 @@ var can_see_player: bool = false
 var has_caught_player: bool = false
 
 var state_timer: float = 0.0
-var wander_direction: Vector3 = Vector3.ZERO
+var move_direction: Vector3 = Vector3.ZERO
+var desired_direction: Vector3 = Vector3.ZERO
 
 @onready var los_debug_line: MeshInstance3D = $LOSDebugLine
 
@@ -97,7 +99,7 @@ func _physics_process(delta: float) -> void:
 
 			if can_see_player:
 				state = State.CHASE
-				desired_velocity = chase_player()
+				desired_velocity = chase_player(delta)
 			else:
 				desired_velocity = handle_idle(delta)
 
@@ -106,7 +108,7 @@ func _physics_process(delta: float) -> void:
 
 			if can_see_player:
 				state = State.CHASE
-				desired_velocity = chase_player()
+				desired_velocity = chase_player(delta)
 			else:
 				desired_velocity = handle_wander(delta)
 
@@ -117,9 +119,8 @@ func _physics_process(delta: float) -> void:
 				catch_player()
 				desired_velocity = Vector3.ZERO
 			elif can_see_player:
-				desired_velocity = chase_player()
+				desired_velocity = chase_player(delta)
 			else:
-				# Player broke sight behind cover.
 				switch_to_wander()
 				desired_velocity = handle_wander(delta)
 
@@ -150,14 +151,17 @@ func switch_to_wander() -> void:
 	state = State.WANDER
 	state_timer = randf_range(walk_min_time, walk_max_time)
 
-	wander_direction = Vector3(
+	desired_direction = Vector3(
 		randf_range(-1.0, 1.0),
 		0.0,
 		randf_range(-1.0, 1.0)
 	).normalized()
 
-	if wander_direction.length() < 0.05:
-		wander_direction = Vector3.FORWARD
+	if desired_direction.length() < 0.05:
+		desired_direction = Vector3.FORWARD
+
+	if move_direction.length() < 0.05:
+		move_direction = desired_direction
 
 
 # ======================
@@ -185,34 +189,42 @@ func handle_wander(delta: float) -> Vector3:
 	var edge_push := get_edge_push()
 	var obstacle_push := get_obstacle_push()
 
-	var noise := Vector3(
-		randf_range(-0.12, 0.12),
-		0.0,
-		randf_range(-0.12, 0.12)
-	)
+	var target_dir := (desired_direction + edge_push + obstacle_push).normalized()
 
-	var final_dir := wander_direction + edge_push + obstacle_push + noise
-
-	if final_dir.length() < 0.05:
+	if target_dir.length() < 0.05:
 		switch_to_wander()
 		return Vector3.ZERO
 
-	wander_direction = final_dir.normalized()
+	move_direction = move_direction.lerp(target_dir, turn_smoothing * delta)
 
-	return wander_direction * walk_speed
+	if move_direction.length() < 0.05:
+		move_direction = target_dir
+
+	move_direction = move_direction.normalized()
+
+	return move_direction * walk_speed
 
 
 # ======================
 # CHASE / CATCH
 # ======================
-func chase_player() -> Vector3:
+func chase_player(delta: float) -> Vector3:
 	var direction := target.global_position - global_position
 	direction.y = 0.0
 
 	if direction.length() < 0.05:
 		return Vector3.ZERO
 
-	return direction.normalized() * chase_speed
+	var target_dir := direction.normalized()
+
+	move_direction = move_direction.lerp(target_dir, turn_smoothing * delta)
+
+	if move_direction.length() < 0.05:
+		move_direction = target_dir
+
+	move_direction = move_direction.normalized()
+
+	return move_direction * chase_speed
 
 
 func is_close_enough_to_catch() -> bool:
@@ -275,7 +287,7 @@ func get_obstacle_push() -> Vector3:
 		normal.y = 0.0
 
 		if normal.length() > 0.05:
-			push += normal.normalized() * 1.8
+			push += normal.normalized() * 1.5
 
 	return push
 
@@ -334,10 +346,8 @@ func update_los_debug_line() -> void:
 	var end_global := start_global
 
 	if state == State.CHASE:
-		# During chase, show direct LOS to the player.
 		end_global = target.global_position + Vector3.UP * target_height
 	else:
-		# While wandering/idling, show forward sightline.
 		var forward_dir := -global_transform.basis.z
 		forward_dir.y = 0.0
 
@@ -357,6 +367,9 @@ func update_los_debug_line() -> void:
 	var start_local := los_debug_line.to_local(start_global)
 	var end_local := los_debug_line.to_local(end_global)
 
+	los_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+	los_mesh.surface_add_vertex(start_local)
+	los_mesh.surface_end()
 	los_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
 	los_mesh.surface_add_vertex(start_local)
 	los_mesh.surface_add_vertex(end_local)
