@@ -18,3 +18,6 @@ shape = SubResource("CapsuleShape3D_bmkl7")
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="CreatureModel" parent="ModelHolder" unique_id=1011530176 instance=ExtResource("1_0px12")]
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=444160881]
+target_position = Vector3(0, 0, -1)
