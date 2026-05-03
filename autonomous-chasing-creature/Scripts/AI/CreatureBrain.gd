@@ -7,9 +7,11 @@ extends CharacterBody3D
 # ======================
 @export var walk_speed: float = 0.4
 @export var chase_speed: float = 1.2
-@export var acceleration: float = 1.5
+@export var acceleration: float = 1.1
 @export var gravity: float = 9.8
-@export var stop_distance: float = 0.45
+
+# Catching
+@export var catch_distance: float = 0.55
 
 # ======================
 # PARK BOUNDS
@@ -33,18 +35,21 @@ extends CharacterBody3D
 @export var debug_los: bool = true
 @export var eye_height: float = 0.2
 @export var target_height: float = 0.2
+@export var vision_range: float = 4.5
 @export var los_collision_mask: int = 1
 
 enum State {
 	IDLE,
 	WANDER,
-	CHASE
+	CHASE,
+	CATCH
 }
 
 var state: State = State.WANDER
 
 var target: Node3D = null
 var can_see_player: bool = false
+var has_caught_player: bool = false
 
 var state_timer: float = 0.0
 var wander_direction: Vector3 = Vector3.ZERO
@@ -73,22 +78,53 @@ func _physics_process(delta: float) -> void:
 		target = get_node_or_null(target_path)
 		return
 
-	update_los()
+	if has_caught_player:
+		state = State.CATCH
+		velocity.x = move_toward(velocity.x, 0.0, acceleration * delta)
+		velocity.z = move_toward(velocity.z, 0.0, acceleration * delta)
+		apply_gravity(delta)
+		move_and_slide()
+
+		if debug_los:
+			update_los_debug_line()
+		return
 
 	var desired_velocity := Vector3.ZERO
 
-	if can_see_player:
-		state = State.CHASE
-		desired_velocity = chase_player()
-	else:
-		match state:
-			State.IDLE:
+	match state:
+		State.IDLE:
+			can_see_player = check_forward_los()
+
+			if can_see_player:
+				state = State.CHASE
+				desired_velocity = chase_player()
+			else:
 				desired_velocity = handle_idle(delta)
-			State.WANDER:
+
+		State.WANDER:
+			can_see_player = check_forward_los()
+
+			if can_see_player:
+				state = State.CHASE
+				desired_velocity = chase_player()
+			else:
 				desired_velocity = handle_wander(delta)
-			State.CHASE:
+
+		State.CHASE:
+			can_see_player = check_direct_los_to_player()
+
+			if is_close_enough_to_catch():
+				catch_player()
+				desired_velocity = Vector3.ZERO
+			elif can_see_player:
+				desired_velocity = chase_player()
+			else:
+				# Player broke sight behind cover.
 				switch_to_wander()
 				desired_velocity = handle_wander(delta)
+
+		State.CATCH:
+			desired_velocity = Vector3.ZERO
 
 	velocity.x = move_toward(velocity.x, desired_velocity.x, acceleration * delta)
 	velocity.z = move_toward(velocity.z, desired_velocity.z, acceleration * delta)
@@ -137,25 +173,7 @@ func handle_idle(delta: float) -> Vector3:
 
 
 # ======================
-# CHASE
-# ======================
-func chase_player() -> Vector3:
-	var distance := global_position.distance_to(target.global_position)
-
-	if distance <= stop_distance:
-		return Vector3.ZERO
-
-	var direction := target.global_position - global_position
-	direction.y = 0.0
-
-	if direction.length() < 0.05:
-		return Vector3.ZERO
-
-	return direction.normalized() * chase_speed
-
-
-# ======================
-# NORMAL WANDER
+# WANDER
 # ======================
 func handle_wander(delta: float) -> Vector3:
 	state_timer -= delta
@@ -182,6 +200,35 @@ func handle_wander(delta: float) -> Vector3:
 	wander_direction = final_dir.normalized()
 
 	return wander_direction * walk_speed
+
+
+# ======================
+# CHASE / CATCH
+# ======================
+func chase_player() -> Vector3:
+	var direction := target.global_position - global_position
+	direction.y = 0.0
+
+	if direction.length() < 0.05:
+		return Vector3.ZERO
+
+	return direction.normalized() * chase_speed
+
+
+func is_close_enough_to_catch() -> bool:
+	var flat_self := Vector3(global_position.x, 0.0, global_position.z)
+	var flat_target := Vector3(target.global_position.x, 0.0, target.global_position.z)
+
+	return flat_self.distance_to(flat_target) <= catch_distance
+
+
+func catch_player() -> void:
+	has_caught_player = true
+	state = State.CATCH
+	velocity = Vector3.ZERO
+
+	if target != null and target.has_method("on_caught"):
+		target.on_caught()
 
 
 # ======================
@@ -228,18 +275,38 @@ func get_obstacle_push() -> Vector3:
 		normal.y = 0.0
 
 		if normal.length() > 0.05:
-			push += normal.normalized() * 1.4
+			push += normal.normalized() * 1.8
 
 	return push
 
 
 # ======================
-# LOS USING DIRECT PHYSICS RAY
+# LOS HELPERS
 # ======================
-func update_los() -> void:
+func check_forward_los() -> bool:
+	var start_pos := global_position + Vector3.UP * eye_height
+
+	var forward_dir := -global_transform.basis.z
+	forward_dir.y = 0.0
+
+	if forward_dir.length() < 0.05:
+		return false
+
+	forward_dir = forward_dir.normalized()
+
+	var end_pos := start_pos + forward_dir * vision_range
+
+	return ray_hits_player(start_pos, end_pos)
+
+
+func check_direct_los_to_player() -> bool:
 	var start_pos := global_position + Vector3.UP * eye_height
 	var end_pos := target.global_position + Vector3.UP * target_height
 
+	return ray_hits_player(start_pos, end_pos)
+
+
+func ray_hits_player(start_pos: Vector3, end_pos: Vector3) -> bool:
 	var query := PhysicsRayQueryParameters3D.create(start_pos, end_pos)
 	query.collision_mask = los_collision_mask
 	query.exclude = [self.get_rid()]
@@ -247,11 +314,11 @@ func update_los() -> void:
 	var result := get_world_3d().direct_space_state.intersect_ray(query)
 
 	if result.is_empty():
-		can_see_player = false
-		return
+		return false
 
 	var hit_collider = result["collider"]
-	can_see_player = hit_collider == target
+
+	return hit_collider == target
 
 
 # ======================
@@ -264,7 +331,19 @@ func update_los_debug_line() -> void:
 	los_mesh.clear_surfaces()
 
 	var start_global := global_position + Vector3.UP * eye_height
-	var end_global := target.global_position + Vector3.UP * target_height
+	var end_global := start_global
+
+	if state == State.CHASE:
+		# During chase, show direct LOS to the player.
+		end_global = target.global_position + Vector3.UP * target_height
+	else:
+		# While wandering/idling, show forward sightline.
+		var forward_dir := -global_transform.basis.z
+		forward_dir.y = 0.0
+
+		if forward_dir.length() > 0.05:
+			forward_dir = forward_dir.normalized()
+			end_global = start_global + forward_dir * vision_range
 
 	var query := PhysicsRayQueryParameters3D.create(start_global, end_global)
 	query.collision_mask = los_collision_mask

@@ -3,24 +3,30 @@ extends CharacterBody3D
 @export var creature_path: NodePath
 
 # Movement
-@export var walk_speed: float = 0.2
+@export var walk_speed: float = 0.3
 @export var flee_speed: float = 1.45
 @export var acceleration: float = 1.8
 @export var gravity: float = 9.8
 
 # Park bounds
-@export var park_min_x: float = -2.5
-@export var park_max_x: float = 2.5
-@export var park_min_z: float = -2.5
-@export var park_max_z: float = 2.5
+@export var park_min_x: float = -3.0
+@export var park_max_x: float = 3.0
+@export var park_min_z: float = -3.0
+@export var park_max_z: float = 3.0
 
-# Idle/walk behaviour
-enum State { IDLE, WALK, FLEE }
+enum State {
+	IDLE,
+	WALK,
+	FLEE,
+	CAUGHT
+}
+
 var state: State = State.WALK
 var state_timer: float = 0.0
 
 var creature: Node3D = null
 var move_direction: Vector3 = Vector3.ZERO
+var is_caught: bool = false
 
 
 func _ready() -> void:
@@ -29,6 +35,14 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if is_caught:
+		state = State.CAUGHT
+		velocity.x = move_toward(velocity.x, 0.0, acceleration * delta)
+		velocity.z = move_toward(velocity.z, 0.0, acceleration * delta)
+		apply_gravity(delta)
+		move_and_slide()
+		return
+
 	if creature == null:
 		creature = get_node_or_null(creature_path)
 		return
@@ -45,10 +59,12 @@ func _physics_process(delta: float) -> void:
 			State.IDLE:
 				desired_velocity = handle_idle()
 			State.WALK:
-				desired_velocity = handle_walk(delta)
+				desired_velocity = handle_walk()
 			State.FLEE:
 				switch_to_walk()
-				desired_velocity = handle_walk(delta)
+				desired_velocity = handle_walk()
+			State.CAUGHT:
+				desired_velocity = Vector3.ZERO
 
 	velocity.x = move_toward(velocity.x, desired_velocity.x, acceleration * delta)
 	velocity.z = move_toward(velocity.z, desired_velocity.z, acceleration * delta)
@@ -58,11 +74,21 @@ func _physics_process(delta: float) -> void:
 	rotate_to_velocity()
 
 
+# Called by CreatureBrain when captured.
+func on_caught() -> void:
+	is_caught = true
+	state = State.CAUGHT
+	velocity = Vector3.ZERO
+
+
 # ======================
 # LOS REACTION
 # ======================
 func is_seen_by_creature() -> bool:
 	if creature == null:
+		return false
+
+	if "has_caught_player" in creature and creature.has_caught_player:
 		return false
 
 	return creature.can_see_player
@@ -101,7 +127,7 @@ func handle_idle() -> Vector3:
 # ======================
 # WALK / WANDER
 # ======================
-func handle_walk(_delta: float) -> Vector3:
+func handle_walk() -> Vector3:
 	if state_timer <= 0.0:
 		switch_to_idle()
 		return Vector3.ZERO
@@ -128,6 +154,9 @@ func switch_to_walk() -> void:
 		0.0,
 		randf_range(-1.0, 1.0)
 	).normalized()
+
+	if move_direction.length() < 0.05:
+		move_direction = Vector3.FORWARD
 
 
 func switch_to_idle() -> void:
