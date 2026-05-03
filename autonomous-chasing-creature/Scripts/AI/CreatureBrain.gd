@@ -2,19 +2,34 @@ extends CharacterBody3D
 
 @export var target_path: NodePath
 
-@export var walk_speed: float = 0.9
+@export var walk_speed: float = 0.4
 @export var chase_speed: float = 1.5
-
-@export var acceleration: float = 2.5
-
-@export var chase_range: float = 6.0
-@export var stop_distance: float = 1.2
+@export var acceleration: float = 1.2
+@export var stop_distance: float = 1.0
 @export var gravity: float = 9.8
 
+# LOS
 var target: Node3D = null
 var can_see_player: bool = false
 
+# 🔥 MEMORY SYSTEM (KEY FIX)
+var chase_memory_time: float = 1.5
+var chase_timer: float = 0.0
+
 @onready var raycast: RayCast3D = $RayCast3D
+
+# Wander
+var wander_direction: Vector3 = Vector3.ZERO
+var wander_timer: float = 0.0
+
+
+func _ready():
+	randomize()
+	wander_direction = Vector3(
+		randf_range(-1, 1),
+		0,
+		randf_range(-1, 1)
+	).normalized()
 
 
 func _physics_process(delta):
@@ -23,22 +38,17 @@ func _physics_process(delta):
 		return
 	
 	update_los()
-	
-	# 🔥 DEBUG (YOU SHOULD SEE TRUE/FALSE CHANGING)
-	print("LOS:", can_see_player)
-	
-	# Movement stays same for now
-	var distance = global_position.distance_to(target.global_position)
+	update_memory(delta)
 	
 	var desired_velocity = Vector3.ZERO
 	
-	var current_speed = walk_speed
-	if distance < chase_range:
-		current_speed = chase_speed
+	# 🔥 CLEAR BEHAVIOR SWITCH
+	if is_chasing():
+		desired_velocity = chase_player()
+	else:
+		desired_velocity = wander(delta)
 	
-	if distance > stop_distance:
-		desired_velocity = SteeringController.seek(global_position, target.global_position, current_speed)
-	
+	# Smooth movement
 	velocity.x = move_toward(velocity.x, desired_velocity.x, acceleration * delta)
 	velocity.z = move_toward(velocity.z, desired_velocity.z, acceleration * delta)
 	
@@ -48,7 +58,62 @@ func _physics_process(delta):
 
 
 # ======================
-# 🔥 LOS FUNCTION
+# 🔥 CHASE STATE CHECK
+# ======================
+func is_chasing():
+	return can_see_player or chase_timer > 0.0
+
+
+func update_memory(delta):
+	if can_see_player:
+		chase_timer = chase_memory_time
+	else:
+		chase_timer -= delta
+
+
+# ======================
+# 🔴 CHASE
+# ======================
+func chase_player():
+	var distance = global_position.distance_to(target.global_position)
+	
+	# 🔥 STOP when close enough
+	if distance <= stop_distance:
+		return Vector3.ZERO
+	
+	return SteeringController.seek(global_position, target.global_position, chase_speed)
+
+
+# ======================
+# 🟢 WANDER
+# ======================
+func wander(delta):
+	wander_timer -= delta
+	
+	if wander_timer <= 0.0:
+		wander_timer = randf_range(1.5, 3.5)
+		
+		var random_dir = Vector3(
+			randf_range(-1, 1),
+			0,
+			randf_range(-1, 1)
+		).normalized()
+		
+		wander_direction = (wander_direction * 0.6 + random_dir * 0.4).normalized()
+	
+	var noise = Vector3(
+		randf_range(-0.2, 0.2),
+		0,
+		randf_range(-0.2, 0.2)
+	)
+	
+	var final_dir = (wander_direction + noise).normalized()
+	
+	return final_dir * walk_speed
+
+
+# ======================
+# 🔵 LOS
 # ======================
 func update_los():
 	var origin = global_transform.origin
@@ -56,9 +121,7 @@ func update_los():
 	
 	var direction = target_pos - origin
 	
-	# Aim ray
 	raycast.target_position = direction
-	
 	raycast.force_raycast_update()
 	
 	if raycast.is_colliding():
@@ -70,6 +133,12 @@ func update_los():
 			can_see_player = false
 	else:
 		can_see_player = false
+	
+	# 🔥 DEBUG (VERY IMPORTANT)
+	if can_see_player:
+		print("SEE PLAYER")
+	else:
+		print("NO SIGHT")
 
 
 # ======================

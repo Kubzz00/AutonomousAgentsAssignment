@@ -1,50 +1,39 @@
 extends CharacterBody3D
 
-@export var threat_path: NodePath
-
-@export var roam_speed: float = 1.0
-@export var flee_speed: float = 2.2
-
-@export var flee_range: float = 6.0
-@export var arena_limit: float = 4.5
+@export var speed: float = 1.0
+@export var acceleration: float = 2.0
 @export var gravity: float = 9.8
 
-@export var center_force_strength: float = 1.2   # 🔥 KEY
+# Park bounds (adjust if needed)
+@export var park_min_x: float = -2.5
+@export var park_max_x: float = 2.5
+@export var park_min_z: float = -2.5
+@export var park_max_z: float = 2.5
 
-var threat: Node3D = null
-var roam_target: Vector3
+# 🔥 STATES
+enum State { IDLE, WALK }
+var state = State.WALK
+
+# 🔥 timers
+var state_timer: float = 0.0
+
+# 🔥 movement
+var move_direction: Vector3 = Vector3.ZERO
 
 
 func _ready():
 	randomize()
-	pick_new_roam_target()
+	switch_to_walk()
 
 
 func _physics_process(delta):
-	if threat == null:
-		threat = get_node_or_null(threat_path)
-		return
+	state_timer -= delta
 	
-	var distance = global_position.distance_to(threat.global_position)
-	
-	var move_dir = Vector3.ZERO
-	
-	if distance < flee_range:
-		move_dir += get_flee_direction()
-	else:
-		move_dir += get_roam_direction()
-	
-	# 🔥 ADD CONTINUOUS CENTER FORCE
-	move_dir += get_center_force()
-	
-	move_dir = move_dir.normalized()
-	
-	var speed = roam_speed
-	if distance < flee_range:
-		speed = flee_speed
-	
-	velocity.x = move_dir.x * speed
-	velocity.z = move_dir.z * speed
+	match state:
+		State.IDLE:
+			handle_idle()
+		State.WALK:
+			handle_walk(delta)
 	
 	apply_gravity(delta)
 	move_and_slide()
@@ -52,47 +41,71 @@ func _physics_process(delta):
 
 
 # ======================
-# 🔴 FLEE DIRECTION
+# 🔵 IDLE
 # ======================
-func get_flee_direction():
-	return (global_position - threat.global_position).normalized()
-
-
-# ======================
-# 🟢 ROAM
-# ======================
-func get_roam_direction():
-	if global_position.distance_to(roam_target) < 1.0:
-		pick_new_roam_target()
+func handle_idle():
+	velocity.x = 0
+	velocity.z = 0
 	
-	return (roam_target - global_position).normalized()
-
-
-func pick_new_roam_target():
-	var safe = arena_limit * 0.5   # 🔥 keep targets near center
-	
-	var x = randf_range(-safe, safe)
-	var z = randf_range(-safe, safe)
-	
-	roam_target = Vector3(x, global_position.y, z)
+	if state_timer <= 0:
+		switch_to_walk()
 
 
 # ======================
-# 🔥 CENTER FORCE (FIX)
+# 🟢 WALK
 # ======================
-func get_center_force():
-	var to_center = -global_position   # (0,0,0 is center)
+func handle_walk(delta):
+	if state_timer <= 0:
+		switch_to_idle()
+		return
 	
-	var dist = to_center.length()
+	# 🔥 EDGE AVOIDANCE
+	var push = Vector3.ZERO
+	var margin = 1.5
 	
-	# stronger force near edges
-	var strength = clamp(dist / arena_limit, 0.0, 1.0)
+	if global_position.x < park_min_x + margin:
+		push.x += 1
+	elif global_position.x > park_max_x - margin:
+		push.x -= 1
 	
-	return to_center.normalized() * strength * center_force_strength
+	if global_position.z < park_min_z + margin:
+		push.z += 1
+	elif global_position.z > park_max_z - margin:
+		push.z -= 1
+	
+	# 🔥 slight randomness
+	var noise = Vector3(
+		randf_range(-0.2, 0.2),
+		0,
+		randf_range(-0.2, 0.2)
+	)
+	
+	var final_dir = (move_direction + push + noise).normalized()
+	var desired_velocity = final_dir * speed
+	
+	velocity.x = move_toward(velocity.x, desired_velocity.x, acceleration * delta)
+	velocity.z = move_toward(velocity.z, desired_velocity.z, acceleration * delta)
 
 
 # ======================
-# 🟢 GRAVITY
+# 🔁 STATE SWITCHING
+# ======================
+func switch_to_walk():
+	state = State.WALK
+	state_timer = randf_range(2.0, 4.0)
+	
+	move_direction = Vector3(
+		randf_range(-1, 1),
+		0,
+		randf_range(-1, 1)
+	).normalized()
+
+
+func switch_to_idle():
+	state = State.IDLE
+	state_timer = randf_range(1.0, 2.5)
+
+
 # ======================
 func apply_gravity(delta):
 	if not is_on_floor():
@@ -101,9 +114,6 @@ func apply_gravity(delta):
 		velocity.y = 0
 
 
-# ======================
-# 🟢 ROTATION
-# ======================
 func rotate_to_velocity():
 	var flat = Vector3(velocity.x, 0, velocity.z)
 	if flat.length() > 0.1:

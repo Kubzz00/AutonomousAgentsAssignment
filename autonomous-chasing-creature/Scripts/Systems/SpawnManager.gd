@@ -35,7 +35,6 @@ func spawn_agents() -> void:
 	
 	# Link after both exist.
 	creature_instance.target_path = creature_instance.get_path_to(player_instance)
-	player_instance.threat_path = player_instance.get_path_to(creature_instance)
 	
 	print("Creature spawned at: ", creature_instance.position)
 	print("Player spawned at: ", player_instance.position)
