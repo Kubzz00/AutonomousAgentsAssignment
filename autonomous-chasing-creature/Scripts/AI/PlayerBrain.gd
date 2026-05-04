@@ -287,3 +287,18 @@ func rotate_to_velocity() -> void:
 
 	if flat_velocity.length() > 0.1:
 		look_at(global_position + flat_velocity, Vector3.UP)
+
+# ======================
+# RESET AGENT
+# ======================
+func reset_agent() -> void:
+	is_caught = false
+	velocity = Vector3.ZERO
+
+	move_direction = Vector3.ZERO
+	desired_direction = Vector3.ZERO
+
+	creature = get_node_or_null(creature_path)
+
+	switch_to_walk()
+	play_state_animation()
