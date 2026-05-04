@@ -36,6 +36,7 @@ script = ExtResource("2_o2x2e")
 animation_player_path = NodePath("ModelHolder/PlayerModel/AnimationPlayer")
 flee_sound_path = NodePath("FleeSound")
 caught_sound_path = NodePath("CaughtSound")
+death_particles_path = NodePath("DeathParticles")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1197627951]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0040899124, 0.16890895, 0.0051107407)

@@ -21,6 +21,13 @@ var flee_sound: AudioStreamPlayer3D = null
 var caught_sound: AudioStreamPlayer3D = null
 
 # ======================
+# PARTICLES
+# ======================
+@export var death_particles_path: NodePath
+
+var death_particles: GPUParticles3D = null
+
+# ======================
 # MOVEMENT
 # ======================
 @export var walk_speed: float = 0.5
@@ -65,23 +72,21 @@ func _ready() -> void:
 	animation_player = get_node_or_null(animation_player_path)
 	flee_sound = get_node_or_null(flee_sound_path)
 	caught_sound = get_node_or_null(caught_sound_path)
+	death_particles = get_node_or_null(death_particles_path)
 
 	if animation_player == null:
 		push_error("PLAYER: AnimationPlayer not found. Check animation_player_path.")
-	else:
-		print("================================")
-		print("PLAYER ANIMATION DEBUG")
-		print("AnimationPlayer path: ", animation_player.get_path())
-		print("Animation list:")
-		for anim_name in animation_player.get_animation_list():
-			print("- ", anim_name)
-		print("================================")
 
 	if flee_sound == null:
 		push_warning("PLAYER: FleeSound not found. Check flee_sound_path.")
 
 	if caught_sound == null:
 		push_warning("PLAYER: CaughtSound not found. Check caught_sound_path.")
+
+	if death_particles == null:
+		push_warning("PLAYER: DeathParticles not found. Check death_particles_path.")
+	else:
+		death_particles.emitting = false
 
 	switch_to_walk()
 	previous_state = state
@@ -107,7 +112,7 @@ func _physics_process(delta: float) -> void:
 
 	var desired_velocity := Vector3.ZERO
 
-	if is_seen_by_creature():
+	if should_flee():
 		state = State.FLEE
 		desired_velocity = flee_from_creature(delta)
 	else:
@@ -140,6 +145,16 @@ func _physics_process(delta: float) -> void:
 
 
 # ======================
+# MULTI-PLAYER SUPPORT
+# ======================
+func set_creature(new_creature: Node3D) -> void:
+	creature = new_creature
+
+	if creature != null:
+		creature_path = get_path_to(creature)
+
+
+# ======================
 # AUDIO
 # ======================
 func handle_state_audio() -> void:
@@ -165,12 +180,28 @@ func handle_state_audio() -> void:
 
 
 # ======================
+# PARTICLES
+# ======================
+func play_death_particles() -> void:
+	if death_particles == null:
+		return
+
+	death_particles.restart()
+	death_particles.emitting = true
+
+
+# ======================
 # CALLED BY CREATURE
 # ======================
 func on_caught() -> void:
+	if is_caught:
+		return
+
 	is_caught = true
 	state = State.CAUGHT
 	velocity = Vector3.ZERO
+
+	play_death_particles()
 	play_state_animation()
 	handle_state_audio()
 
@@ -216,15 +247,17 @@ func play_animation(animation_name: String) -> void:
 
 
 # ======================
-# LOS REACTION
+# DANGER / FLEE LOGIC
 # ======================
-func is_seen_by_creature() -> bool:
+func should_flee() -> bool:
 	if creature == null:
 		return false
 
 	if creature.get("has_caught_player") == true:
 		return false
 
+	# Reliable demo logic:
+	# Player flees when creature has line-of-sight.
 	return creature.get("can_see_player") == true
 
 
@@ -361,6 +394,9 @@ func reset_agent() -> void:
 
 	if flee_sound != null and flee_sound.playing:
 		flee_sound.stop()
+
+	if death_particles != null:
+		death_particles.emitting = false
 
 	switch_to_walk()
 	play_state_animation()

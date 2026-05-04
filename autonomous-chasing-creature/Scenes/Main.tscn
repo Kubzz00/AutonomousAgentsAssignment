@@ -37,6 +37,21 @@ size = Vector3(0.8079834, 0.29766846, 0.288208)
 height = 1.533081
 radius = 1.0380859
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2w5on"]
+direction = Vector3(0, 1, 0)
+spread = 35.0
+initial_velocity_min = 0.79999995
+initial_velocity_max = 1.8
+gravity = Vector3(0, -2.5, 0)
+scale_min = 0.02
+scale_max = 0.04
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2w5on"]
+albedo_color = Color(0.69739276, 0.91805476, 0.99615556, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_346fj"]
+material = SubResource("StandardMaterial3D_2w5on")
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_50glp"]
 height = 8.869385
 radius = 5.6054688
@@ -582,6 +597,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.028943568, -0.029968262, 0.
 shape = SubResource("CylinderShape3D_pbw6q")
 
 [node name="Fountain" parent="ArenaRotator/Park/Obstacles/Fountain/Obstacle_Fountain" unique_id=1328398290 instance=ExtResource("3_50glp")]
+
+[node name="WaterParticles" type="GPUParticles3D" parent="ArenaRotator/Park/Obstacles/Fountain" unique_id=667226877]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.73133206, 0.08492708)
+amount = 80
+lifetime = 1.2
+randomness = 0.5
+process_material = SubResource("ParticleProcessMaterial_2w5on")
+draw_pass_1 = SubResource("SphereMesh_346fj")
 
 [node name="Gazebo" type="Node3D" parent="ArenaRotator/Park/Obstacles" unique_id=584867405]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14579129, 2.1483314)
