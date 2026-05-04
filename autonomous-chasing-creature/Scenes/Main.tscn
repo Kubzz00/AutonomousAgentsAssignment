@@ -25,6 +25,7 @@ albedo_color = Color(0.13204214, 0.426018, 0.12290784, 1)
 material = SubResource("StandardMaterial3D_rgh2o")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_frkhe"]
+size = Vector3(7.002014, 0.20410156, 7.008301)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kln2b"]
 size = Vector3(0.33372498, 0.4584961, 0.6948242)
@@ -94,7 +95,7 @@ transform = Transform3D(7, 0, 0, 0, 0.2, 0, 0, 0, 7, 0, 0, 0)
 mesh = SubResource("BoxMesh_grg3l")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaRotator/Park/Platform" unique_id=290768792]
-transform = Transform3D(7, 0, 0, 0, 0.2, 0, 0, 0, 7, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01071167, 0.00390625, -0.0009765625)
 shape = SubResource("BoxShape3D_frkhe")
 
 [node name="Obstacles" type="Node3D" parent="ArenaRotator/Park" unique_id=363595939]

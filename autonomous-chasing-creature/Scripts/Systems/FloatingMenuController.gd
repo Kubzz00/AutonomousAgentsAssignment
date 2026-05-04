@@ -49,22 +49,6 @@ func _ready() -> void:
 	apply_menu_content_visibility()
 	update_menu_text()
 
-
-func _process(_delta: float) -> void:
-	# Desktop fallback. Keep these for testing.
-	if Input.is_action_just_pressed("toggle_los"):
-		toggle_los()
-
-	if Input.is_action_just_pressed("toggle_debug"):
-		toggle_debug()
-
-	if Input.is_action_just_pressed("reset_simulation"):
-		reset_simulation()
-
-	if Input.is_action_just_pressed("toggle_floating_menu"):
-		toggle_menu_content()
-
-
 # ======================
 # BUTTON CONNECTIONS
 # ======================
