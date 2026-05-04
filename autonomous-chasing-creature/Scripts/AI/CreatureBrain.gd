@@ -14,22 +14,23 @@ extends CharacterBody3D
 # ======================
 # MOVEMENT
 # ======================
-@export var walk_speed: float = 0.4
+@export var walk_speed: float = 0.5
 @export var chase_speed: float = 1.2
-@export var acceleration: float = 1.2
+@export var acceleration: float = 1.5
 @export var turn_smoothing: float = 2.0
 @export var gravity: float = 9.8
 
 # Catching
-@export var catch_distance: float = 0.4
+@export var catch_distance: float = 0.55
 
 # ======================
 # PARK BOUNDS
 # ======================
-@export var park_min_x: float = -2.5
-@export var park_max_x: float = 2.5
-@export var park_min_z: float = -2.5
-@export var park_max_z: float = 2.5
+@export var park_min_x: float = -2.0
+@export var park_max_x: float = 2.0
+@export var park_min_z: float = -2.0
+@export var park_max_z: float = 2.0
+
 
 # ======================
 # WANDER / IDLE
@@ -45,7 +46,7 @@ extends CharacterBody3D
 @export var debug_los: bool = true
 @export var eye_height: float = 0.2
 @export var target_height: float = 0.2
-@export var vision_range: float = 4.0
+@export var vision_range: float = 3.5
 @export var los_collision_mask: int = 1
 
 enum State {
@@ -80,6 +81,17 @@ func _ready() -> void:
 	randomize()
 
 	animation_player = get_node_or_null(animation_player_path)
+
+	if animation_player == null:
+		push_error("CREATURE: AnimationPlayer not found. Check animation_player_path.")
+	else:
+		print("================================")
+		print("CREATURE ANIMATION DEBUG")
+		print("AnimationPlayer path: ", animation_player.get_path())
+		print("Animation list:")
+		for anim_name in animation_player.get_animation_list():
+			print("- ", anim_name)
+		print("================================")
 
 	los_seen_material.albedo_color = Color(0.0, 1.0, 0.0, 1.0)
 	los_blocked_material.albedo_color = Color(1.0, 0.0, 0.0, 1.0)
@@ -193,7 +205,7 @@ func play_animation(animation_name: String) -> void:
 		return
 
 	if not animation_player.has_animation(animation_name):
-		push_warning("Creature animation not found: " + animation_name)
+		push_warning("CREATURE animation not found: " + animation_name)
 		return
 
 	current_animation = animation_name

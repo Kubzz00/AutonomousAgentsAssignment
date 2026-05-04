@@ -23,10 +23,10 @@ extends CharacterBody3D
 # ======================
 # PARK BOUNDS
 # ======================
-@export var park_min_x: float = -3.0
-@export var park_max_x: float = 3.0
-@export var park_min_z: float = -3.0
-@export var park_max_z: float = 3.0
+@export var park_min_x: float = -2.0
+@export var park_max_x: float = 2.0
+@export var park_min_z: float = -2.0
+@export var park_max_z: float = 2.0
 
 enum State {
 	IDLE,
