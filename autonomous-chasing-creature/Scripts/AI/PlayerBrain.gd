@@ -12,6 +12,15 @@ extends CharacterBody3D
 @export var caught_animation: String = "CharacterArmature|Death"
 
 # ======================
+# AUDIO
+# ======================
+@export var flee_sound_path: NodePath
+@export var caught_sound_path: NodePath
+
+var flee_sound: AudioStreamPlayer3D = null
+var caught_sound: AudioStreamPlayer3D = null
+
+# ======================
 # MOVEMENT
 # ======================
 @export var walk_speed: float = 0.5
@@ -36,6 +45,8 @@ enum State {
 }
 
 var state: State = State.WALK
+var previous_state: State = State.WALK
+
 var state_timer: float = 0.0
 
 var creature: Node3D = null
@@ -52,14 +63,28 @@ func _ready() -> void:
 	randomize()
 
 	animation_player = get_node_or_null(animation_player_path)
+	flee_sound = get_node_or_null(flee_sound_path)
+	caught_sound = get_node_or_null(caught_sound_path)
 
 	if animation_player == null:
 		push_error("PLAYER: AnimationPlayer not found. Check animation_player_path.")
 	else:
-		print("PLAYER: AnimationPlayer found: ", animation_player.get_path())
-		print("PLAYER animations: ", animation_player.get_animation_list())
+		print("================================")
+		print("PLAYER ANIMATION DEBUG")
+		print("AnimationPlayer path: ", animation_player.get_path())
+		print("Animation list:")
+		for anim_name in animation_player.get_animation_list():
+			print("- ", anim_name)
+		print("================================")
+
+	if flee_sound == null:
+		push_warning("PLAYER: FleeSound not found. Check flee_sound_path.")
+
+	if caught_sound == null:
+		push_warning("PLAYER: CaughtSound not found. Check caught_sound_path.")
 
 	switch_to_walk()
+	previous_state = state
 
 
 func _physics_process(delta: float) -> void:
@@ -72,6 +97,8 @@ func _physics_process(delta: float) -> void:
 
 		apply_gravity(delta)
 		move_and_slide()
+
+		handle_state_audio()
 		return
 
 	if creature == null:
@@ -89,11 +116,14 @@ func _physics_process(delta: float) -> void:
 		match state:
 			State.IDLE:
 				desired_velocity = handle_idle()
+
 			State.WALK:
 				desired_velocity = handle_walk(delta)
+
 			State.FLEE:
 				switch_to_walk()
 				desired_velocity = handle_walk(delta)
+
 			State.CAUGHT:
 				desired_velocity = Vector3.ZERO
 
@@ -106,6 +136,33 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	rotate_to_velocity()
 
+	handle_state_audio()
+
+
+# ======================
+# AUDIO
+# ======================
+func handle_state_audio() -> void:
+	if state == previous_state:
+		return
+
+	if state == State.FLEE:
+		if flee_sound != null and not flee_sound.playing:
+			flee_sound.play()
+
+	elif state == State.CAUGHT:
+		if flee_sound != null and flee_sound.playing:
+			flee_sound.stop()
+
+		if caught_sound != null:
+			caught_sound.play()
+
+	else:
+		if flee_sound != null and flee_sound.playing:
+			flee_sound.stop()
+
+	previous_state = state
+
 
 # ======================
 # CALLED BY CREATURE
@@ -115,6 +172,7 @@ func on_caught() -> void:
 	state = State.CAUGHT
 	velocity = Vector3.ZERO
 	play_state_animation()
+	handle_state_audio()
 
 
 # ======================
@@ -288,8 +346,9 @@ func rotate_to_velocity() -> void:
 	if flat_velocity.length() > 0.1:
 		look_at(global_position + flat_velocity, Vector3.UP)
 
+
 # ======================
-# RESET AGENT
+# RESET SUPPORT
 # ======================
 func reset_agent() -> void:
 	is_caught = false
@@ -300,11 +359,17 @@ func reset_agent() -> void:
 
 	creature = get_node_or_null(creature_path)
 
+	if flee_sound != null and flee_sound.playing:
+		flee_sound.stop()
+
 	switch_to_walk()
 	play_state_animation()
 
+	previous_state = state
+
+
 # ======================
-# DEBUG
+# DEBUG OVERLAY SUPPORT
 # ======================
 func get_state_name() -> String:
 	match state:

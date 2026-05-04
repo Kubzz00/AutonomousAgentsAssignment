@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://btun162b1g28a"
-path="res://.godot/imported/ambience.wav-6eaa5866e3ddc160bfc042747e689376.sample"
+path="res://.godot/imported/ambience.wav-977fe059ab489bb7fd50261f484d63bd.sample"
 
 [deps]
 
-source_file="res://Assests/Audio/ambience.wav"
-dest_files=["res://.godot/imported/ambience.wav-6eaa5866e3ddc160bfc042747e689376.sample"]
+source_file="res://Assests/Audio/Ambience/ambience.wav"
+dest_files=["res://.godot/imported/ambience.wav-977fe059ab489bb7fd50261f484d63bd.sample"]
 
 [params]
 

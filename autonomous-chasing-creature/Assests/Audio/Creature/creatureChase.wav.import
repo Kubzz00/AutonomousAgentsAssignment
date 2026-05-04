@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://n55e7rhiku28"
-path="res://.godot/imported/creatureChase.wav-bbbfbaa1c7489da0c339bbdfe0b53893.sample"
+path="res://.godot/imported/creatureChase.wav-cfb5b8a65a5be517b9955400491da7c1.sample"
 
 [deps]
 
-source_file="res://Assests/Audio/creatureChase.wav"
-dest_files=["res://.godot/imported/creatureChase.wav-bbbfbaa1c7489da0c339bbdfe0b53893.sample"]
+source_file="res://Assests/Audio/Creature/creatureChase.wav"
+dest_files=["res://.godot/imported/creatureChase.wav-cfb5b8a65a5be517b9955400491da7c1.sample"]
 
 [params]
 

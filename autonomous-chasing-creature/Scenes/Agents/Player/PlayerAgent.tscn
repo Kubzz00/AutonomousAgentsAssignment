@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://bjiblehuvvb4y" path="res://Assests/Models/Player/PlayerIdle.glb" id="2_c75jm"]
 [ext_resource type="Script" uid="uid://cxwpjexvqo4lc" path="res://Scripts/AI/PlayerBrain.gd" id="2_o2x2e"]
 [ext_resource type="Script" uid="uid://dtndveqv4h3gp" path="res://Scripts/Systems/StateVisualController.gd" id="3_c75jm"]
+[ext_resource type="AudioStream" uid="uid://dfoal7gk4ajet" path="res://Assests/Audio/Player/playerRunning.wav" id="4_7bnb1"]
+[ext_resource type="AudioStream" uid="uid://f7tgqey83hps" path="res://Assests/Audio/Player/playerDeath.wav" id="5_ps3yb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o2x2e"]
 radius = 0.045410156
@@ -14,6 +16,8 @@ height = 0.38763428
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 script = ExtResource("2_o2x2e")
 animation_player_path = NodePath("ModelHolder/PlayerModel/AnimationPlayer")
+flee_sound_path = NodePath("FleeSound")
+caught_sound_path = NodePath("CaughtSound")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1197627951]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0040899124, 0.16890895, 0.0051107407)
@@ -110,5 +114,12 @@ agent_path = NodePath("..")
 marker_path = NodePath(".")
 alert_color = Color(0.8341391, 0.40512738, 5.7756904e-07, 1)
 caught_color = Color(0.84968925, 0, 0.039439972, 1)
+
+[node name="FleeSound" type="AudioStreamPlayer3D" parent="." unique_id=2004374864]
+stream = ExtResource("4_7bnb1")
+volume_db = -8.804
+
+[node name="CaughtSound" type="AudioStreamPlayer3D" parent="." unique_id=536709858]
+stream = ExtResource("5_ps3yb")
 
 [editable path="ModelHolder/PlayerModel"]

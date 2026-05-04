@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://dv2s2j1rnufnr" path="res://Scripts/AI/CreatureBrain.gd" id="1_bmkl7"]
 [ext_resource type="PackedScene" uid="uid://xsaolxpxmntk" path="res://Assests/Models/Creature/CreatureBase.glb" id="2_bmkl7"]
 [ext_resource type="Script" uid="uid://dtndveqv4h3gp" path="res://Scripts/Systems/StateVisualController.gd" id="3_qtvqc"]
-[ext_resource type="AudioStream" uid="uid://n55e7rhiku28" path="res://Assests/Audio/creatureChase.wav" id="4_yyq4j"]
-[ext_resource type="AudioStream" uid="uid://bbhf8xfl4oy0i" path="res://Assests/Audio/creatureAttack.wav" id="5_vuvry"]
-[ext_resource type="AudioStream" uid="uid://crakrpofua54f" path="res://Assests/Audio/creatureWalkIdle.wav" id="6_vuvry"]
+[ext_resource type="AudioStream" uid="uid://n55e7rhiku28" path="res://Assests/Audio/Creature/creatureChase.wav" id="4_yyq4j"]
+[ext_resource type="AudioStream" uid="uid://bbhf8xfl4oy0i" path="res://Assests/Audio/Creature/creatureAttack.wav" id="5_vuvry"]
+[ext_resource type="AudioStream" uid="uid://crakrpofua54f" path="res://Assests/Audio/Creature/creatureWalkIdle.wav" id="6_vuvry"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bmkl7"]
 radius = 0.044921875

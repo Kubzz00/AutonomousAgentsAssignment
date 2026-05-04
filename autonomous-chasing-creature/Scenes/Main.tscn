@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://hwavodk3la5p" path="res://Scenes/Agents/Player/PlayerAgent.tscn" id="5_grg3l"]
 [ext_resource type="PackedScene" uid="uid://byeyfbl8vycck" path="res://Assests/Models/Obstacles/Bush.glb" id="6_jw32o"]
 [ext_resource type="Script" uid="uid://bqkydjpibcosr" path="res://Scripts/Debug/DebugOverlay.gd" id="11_grg3l"]
-[ext_resource type="AudioStream" uid="uid://btun162b1g28a" path="res://Assests/Audio/ambience.wav" id="13_frkhe"]
+[ext_resource type="AudioStream" uid="uid://btun162b1g28a" path="res://Assests/Audio/Ambience/ambience.wav" id="13_frkhe"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgh2o"]
 albedo_color = Color(0.13204214, 0.426018, 0.12290784, 1)

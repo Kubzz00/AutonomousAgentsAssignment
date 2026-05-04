@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://crakrpofua54f"
-path="res://.godot/imported/creatureWalkIdle.wav-ee3e9553de96abf210f0dccb7ccb0263.sample"
+path="res://.godot/imported/creatureWalkIdle.wav-d6f96a61ae9e9cb1615859c0809f06ff.sample"
 
 [deps]
 
-source_file="res://Assests/Audio/creatureWalkIdle.wav"
-dest_files=["res://.godot/imported/creatureWalkIdle.wav-ee3e9553de96abf210f0dccb7ccb0263.sample"]
+source_file="res://Assests/Audio/Creature/creatureWalkIdle.wav"
+dest_files=["res://.godot/imported/creatureWalkIdle.wav-d6f96a61ae9e9cb1615859c0809f06ff.sample"]
 
 [params]
 
