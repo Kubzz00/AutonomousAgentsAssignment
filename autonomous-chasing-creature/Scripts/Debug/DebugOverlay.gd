@@ -23,22 +23,18 @@ func _process(_delta: float) -> void:
 		return
 
 	var creature = spawn_manager.creature_instance
-	var player = spawn_manager.player_instance
+	var players = spawn_manager.player_instances
 
-	if creature == null or player == null:
+	if creature == null or players == null or players.is_empty():
 		debug_label.text = "Waiting for agents..."
 		return
 
 	var creature_state := "UNKNOWN"
-	var player_state := "UNKNOWN"
 	var los_text := "false"
 	var caught_text := "false"
 
 	if creature.has_method("get_state_name"):
 		creature_state = creature.get_state_name()
-
-	if player.has_method("get_state_name"):
-		player_state = player.get_state_name()
 
 	if creature.get("can_see_player") == true:
 		los_text = "true"
@@ -46,9 +42,32 @@ func _process(_delta: float) -> void:
 	if creature.get("has_caught_player") == true:
 		caught_text = "true"
 
+	var caught_count := 0
+	var total_players := 0
+	var player_lines := ""
+
+	for i in range(players.size()):
+		var player = players[i]
+
+		if player == null:
+			continue
+
+		total_players += 1
+
+		var player_state := "UNKNOWN"
+
+		if player.has_method("get_state_name"):
+			player_state = player.get_state_name()
+
+		if player.get("is_caught") == true:
+			caught_count += 1
+
+		player_lines += "\nP" + str(i + 1) + ": " + player_state
+
 	debug_label.text = (
 		"CREATURE: " + creature_state +
-		"\nPLAYER: " + player_state +
 		"\nLOS: " + los_text +
-		"\nCAUGHT: " + caught_text
+		"\nCAUGHT: " + caught_text +
+		"\nPLAYERS: " + str(caught_count) + "/" + str(total_players) + " caught" +
+		player_lines
 	)
