@@ -12,6 +12,17 @@ extends CharacterBody3D
 @export var catch_animation: String = "Armature|Attack"
 
 # ======================
+# AUDIO
+# ======================
+@export var idle_walk_sound_path: NodePath
+@export var alert_sound_path: NodePath
+@export var catch_sound_path: NodePath
+
+var idle_walk_sound: AudioStreamPlayer3D = null
+var alert_sound: AudioStreamPlayer3D = null
+var catch_sound: AudioStreamPlayer3D = null
+
+# ======================
 # MOVEMENT
 # ======================
 @export var walk_speed: float = 0.5
@@ -31,7 +42,6 @@ extends CharacterBody3D
 @export var park_min_z: float = -2.0
 @export var park_max_z: float = 2.0
 
-
 # ======================
 # WANDER / IDLE
 # ======================
@@ -46,7 +56,7 @@ extends CharacterBody3D
 @export var debug_los: bool = true
 @export var eye_height: float = 0.2
 @export var target_height: float = 0.2
-@export var vision_range: float = 3.5
+@export var vision_range: float = 3.0
 @export var los_collision_mask: int = 1
 
 enum State {
@@ -57,6 +67,7 @@ enum State {
 }
 
 var state: State = State.WANDER
+var previous_state: State = State.WANDER
 
 var target: Node3D = null
 var animation_player: AnimationPlayer = null
@@ -82,6 +93,10 @@ func _ready() -> void:
 
 	animation_player = get_node_or_null(animation_player_path)
 
+	idle_walk_sound = get_node_or_null(idle_walk_sound_path)
+	alert_sound = get_node_or_null(alert_sound_path)
+	catch_sound = get_node_or_null(catch_sound_path)
+
 	if animation_player == null:
 		push_error("CREATURE: AnimationPlayer not found. Check animation_player_path.")
 	else:
@@ -93,6 +108,17 @@ func _ready() -> void:
 			print("- ", anim_name)
 		print("================================")
 
+	if idle_walk_sound == null:
+		push_warning("CREATURE: IdleWalkSound not found. Check idle_walk_sound_path.")
+	else:
+		idle_walk_sound.play()
+
+	if alert_sound == null:
+		push_warning("CREATURE: AlertSound not found. Check alert_sound_path.")
+
+	if catch_sound == null:
+		push_warning("CREATURE: CatchSound not found. Check catch_sound_path.")
+
 	los_seen_material.albedo_color = Color(0.0, 1.0, 0.0, 1.0)
 	los_blocked_material.albedo_color = Color(1.0, 0.0, 0.0, 1.0)
 
@@ -100,6 +126,7 @@ func _ready() -> void:
 		los_debug_line.mesh = los_mesh
 
 	switch_to_wander()
+	previous_state = state
 
 
 func _physics_process(delta: float) -> void:
@@ -116,6 +143,8 @@ func _physics_process(delta: float) -> void:
 
 		apply_gravity(delta)
 		move_and_slide()
+
+		handle_state_audio()
 
 		if debug_los:
 			update_los_debug_line()
@@ -167,9 +196,38 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	rotate_to_velocity()
+	handle_state_audio()
 
 	if debug_los:
 		update_los_debug_line()
+
+
+# ======================
+# AUDIO
+# ======================
+func handle_state_audio() -> void:
+	if state == previous_state:
+		return
+
+	if state == State.CHASE:
+		if idle_walk_sound != null:
+			idle_walk_sound.stop()
+
+		if alert_sound != null:
+			alert_sound.play()
+
+	elif state == State.CATCH:
+		if idle_walk_sound != null:
+			idle_walk_sound.stop()
+
+		if catch_sound != null:
+			catch_sound.play()
+
+	elif state == State.WANDER or state == State.IDLE:
+		if idle_walk_sound != null and not idle_walk_sound.playing:
+			idle_walk_sound.play()
+
+	previous_state = state
 
 
 # ======================
@@ -474,8 +532,9 @@ func rotate_to_velocity() -> void:
 	if flat_velocity.length() > 0.1:
 		look_at(global_position + flat_velocity, Vector3.UP)
 
+
 # ======================
-# RESET AGENT
+# RESET SUPPORT
 # ======================
 func reset_agent() -> void:
 	has_caught_player = false
@@ -490,9 +549,15 @@ func reset_agent() -> void:
 	switch_to_wander()
 	play_state_animation()
 
+	previous_state = state
+
+	if idle_walk_sound != null and not idle_walk_sound.playing:
+		idle_walk_sound.play()
+
+
 # ======================
-# DEBUG
-# ======================	
+# DEBUG OVERLAY SUPPORT
+# ======================
 func get_state_name() -> String:
 	match state:
 		State.IDLE:

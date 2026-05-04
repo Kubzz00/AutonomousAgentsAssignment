@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://hwavodk3la5p" path="res://Scenes/Agents/Player/PlayerAgent.tscn" id="5_grg3l"]
 [ext_resource type="PackedScene" uid="uid://byeyfbl8vycck" path="res://Assests/Models/Obstacles/Bush.glb" id="6_jw32o"]
 [ext_resource type="Script" uid="uid://bqkydjpibcosr" path="res://Scripts/Debug/DebugOverlay.gd" id="11_grg3l"]
+[ext_resource type="AudioStream" uid="uid://btun162b1g28a" path="res://Assests/Audio/ambience.wav" id="13_frkhe"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgh2o"]
 albedo_color = Color(0.13204214, 0.426018, 0.12290784, 1)
@@ -663,3 +664,7 @@ environment = SubResource("Environment_rgh2o")
 transform = Transform3D(1, 0, 0, 0, 0.03264927, 0.9994669, 0, -0.9994669, 0.03264927, 0, 4.085877, 0)
 
 [node name="StartXR" parent="." unique_id=1297519848 instance=ExtResource("2_idj7w")]
+
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="." unique_id=1956710480]
+stream = ExtResource("13_frkhe")
+autoplay = true
