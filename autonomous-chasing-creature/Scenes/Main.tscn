@@ -102,6 +102,7 @@ rotation_speed_degrees = 8.0
 script = ExtResource("3_vy5pj")
 creature_scene = ExtResource("4_4kpch")
 player_scene = ExtResource("5_grg3l")
+player_count = 7
 
 [node name="Platform" type="StaticBody3D" parent="ArenaRotator/Park" unique_id=286951735]
 
@@ -696,7 +697,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8354254, 0.13642693, 3.001
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.628526, 0.13642693, -2.8869433)
 
 [node name="DebugOverlay" type="Node3D" parent="ArenaRotator/Park" unique_id=8828476]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.999779, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6675894, 0)
 script = ExtResource("11_grg3l")
 spawn_manager_path = NodePath("..")
 label_path = NodePath("DebugLabel")
@@ -806,6 +807,7 @@ transform = Transform3D(1, 0, 0, 0, 0.03264927, 0.9994669, 0, -0.9994669, 0.0326
 
 [node name="StartXR" parent="." unique_id=1297519848 instance=ExtResource("2_idj7w")]
 
-[node name="AmbientSound" type="AudioStreamPlayer3D" parent="." unique_id=1956710480]
+[node name="AmbientSound" type="AudioStreamPlayer3D" parent="." unique_id=612689437]
 stream = ExtResource("13_frkhe")
+volume_db = -10.0
 autoplay = true
