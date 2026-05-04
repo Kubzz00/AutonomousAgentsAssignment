@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://hwavodk3la5p" path="res://Scenes/Agents/Player/PlayerAgent.tscn" id="5_grg3l"]
 [ext_resource type="PackedScene" uid="uid://byeyfbl8vycck" path="res://Assests/Models/Obstacles/Bush.glb" id="6_jw32o"]
 [ext_resource type="Script" uid="uid://bqkydjpibcosr" path="res://Scripts/Debug/DebugOverlay.gd" id="11_grg3l"]
+[ext_resource type="Script" uid="uid://chpq1jluw4q08" path="res://Scripts/Systems/FloatingMenuController.gd" id="12_1p5hy"]
 [ext_resource type="AudioStream" uid="uid://btun162b1g28a" path="res://Assests/Audio/Ambience/ambience.wav" id="13_frkhe"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgh2o"]
@@ -38,6 +39,21 @@ radius = 5.6054688
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vy5pj"]
 size = Vector3(0.24560547, 0.1628418, 0.19113159)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1p5hy"]
+size = Vector3(0.2019043, 0.19067383, 0.19506836)
+
+[sub_resource type="BoxMesh" id="BoxMesh_frkhe"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h1m7h"]
+size = Vector3(0.19592285, 0.20214844, 0.1987915)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1p5hy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_erwvk"]
+size = Vector3(0.19799805, 0.20092773, 0.19995117)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h1m7h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_idj7w"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -656,6 +672,80 @@ label_path = NodePath("DebugLabel")
 billboard = 1
 outline_modulate = Color(0, 0.40455505, 0, 1)
 text = "."
+
+[node name="FloatingMenu" type="Node3D" parent="." unique_id=2080642437]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.47828722, 7.1059256, 2.9065723)
+script = ExtResource("12_1p5hy")
+park_path = NodePath("../ArenaRotator/Park")
+debug_overlay_path = NodePath("../ArenaRotator/Park/DebugOverlay")
+menu_title_path = NodePath("MenuText")
+toggle_los_button_path = NodePath("ToggleLOSButton")
+toggle_debug_button_path = NodePath("ToggleDebugButton")
+reset_button_path = NodePath("ResetButton")
+hide_menu_button_path = NodePath("HideMenuButton")
+
+[node name="MenuText" type="Label3D" parent="FloatingMenu" unique_id=1497769217]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+text = "MENU"
+font_size = 25
+outline_size = 10
+
+[node name="ToggleLOSButton" type="Area3D" parent="FloatingMenu" unique_id=1097579212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0845779, -0.39790726, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingMenu/ToggleLOSButton" unique_id=1633679946]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0018310547, -0.25305176, 0.0032958984)
+shape = SubResource("BoxShape3D_1p5hy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FloatingMenu/ToggleLOSButton" unique_id=1891412161]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.25, 0)
+mesh = SubResource("BoxMesh_frkhe")
+
+[node name="Label3D" type="Label3D" parent="FloatingMenu/ToggleLOSButton" unique_id=1094638030]
+text = "LOS"
+
+[node name="ToggleDebugButton" type="Area3D" parent="FloatingMenu" unique_id=755747504]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3828001, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingMenu/ToggleDebugButton" unique_id=1747279127]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0026245117, -0.2475586, -0.00039672852)
+shape = SubResource("BoxShape3D_h1m7h")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FloatingMenu/ToggleDebugButton" unique_id=824358349]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.24963951, 0)
+mesh = SubResource("BoxMesh_1p5hy")
+
+[node name="Label3D" type="Label3D" parent="FloatingMenu/ToggleDebugButton" unique_id=320725541]
+text = "Debug"
+
+[node name="ResetButton" type="Area3D" parent="FloatingMenu" unique_id=244520706]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.97675353, -0.3779583, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingMenu/ResetButton" unique_id=636043268]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0018310547, -0.2532959, -0.0018310547)
+shape = SubResource("BoxShape3D_erwvk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FloatingMenu/ResetButton" unique_id=1758360442]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.25, 0)
+mesh = SubResource("BoxMesh_h1m7h")
+
+[node name="Label3D" type="Label3D" parent="FloatingMenu/ResetButton" unique_id=1205468997]
+text = "Reset"
+
+[node name="HideMenuButton" type="Area3D" parent="FloatingMenu" unique_id=1641365633]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0003143549, -0.965374, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingMenu/HideMenuButton" unique_id=808872523]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0018310547, -0.2532959, -0.0018310547)
+shape = SubResource("BoxShape3D_erwvk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FloatingMenu/HideMenuButton" unique_id=197407134]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.25, 0)
+mesh = SubResource("BoxMesh_h1m7h")
+
+[node name="Label3D" type="Label3D" parent="FloatingMenu/HideMenuButton" unique_id=1561527756]
+text = "Hide Menu"
+font_size = 23
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1068983022]
 environment = SubResource("Environment_rgh2o")

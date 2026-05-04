@@ -12,18 +12,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 5)
 current = true
 
 [node name="LeftHand" type="XRNode3D" parent="XROrigin3D" unique_id=1449677619]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3576684, 0, 0)
 tracker = &"/user/hand_tracker/left"
 
 [node name="LeftHandHumanoid2" parent="XROrigin3D/LeftHand" unique_id=625171745 instance=ExtResource("1_3sh0o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.33594066, 2.4096444, 4.1398387)
 
 [node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/LeftHand/LeftHandHumanoid2/LeftHandHumanoid/Skeleton3D" parent_id_path=PackedInt32Array(625171745, 752269831) index="1" unique_id=1654148111]
 
 [node name="RightHand" type="XRNode3D" parent="XROrigin3D" unique_id=850570618]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26732922, 0, 0)
 tracker = &"/user/hand_tracker/right"
 
 [node name="RightHandHumanoid2" parent="XROrigin3D/RightHand" unique_id=998918230 instance=ExtResource("2_6icq6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13155282, 2.4179707, 4.1624327)
 
 [node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/RightHand/RightHandHumanoid2/RightHandHumanoid/Skeleton3D" parent_id_path=PackedInt32Array(998918230, 1699381656) index="1" unique_id=839675067]
 hand_tracker = &"/user/hand_tracker/right"
