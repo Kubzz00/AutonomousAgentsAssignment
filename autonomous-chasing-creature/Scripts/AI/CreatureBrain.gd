@@ -56,7 +56,7 @@ var catch_sound: AudioStreamPlayer3D = null
 @export var debug_los: bool = true
 @export var eye_height: float = 0.2
 @export var target_height: float = 0.2
-@export var vision_range: float = 3.0
+@export var vision_range: float = 2.5
 @export var los_collision_mask: int = 1
 
 enum State {
@@ -70,6 +70,7 @@ var state: State = State.WANDER
 var previous_state: State = State.WANDER
 
 var target: Node3D = null
+var spawn_manager: Node = null
 var animation_player: AnimationPlayer = null
 
 var can_see_player: bool = false
@@ -99,25 +100,9 @@ func _ready() -> void:
 
 	if animation_player == null:
 		push_error("CREATURE: AnimationPlayer not found. Check animation_player_path.")
-	else:
-		print("================================")
-		print("CREATURE ANIMATION DEBUG")
-		print("AnimationPlayer path: ", animation_player.get_path())
-		print("Animation list:")
-		for anim_name in animation_player.get_animation_list():
-			print("- ", anim_name)
-		print("================================")
 
-	if idle_walk_sound == null:
-		push_warning("CREATURE: IdleWalkSound not found. Check idle_walk_sound_path.")
-	else:
+	if idle_walk_sound != null:
 		idle_walk_sound.play()
-
-	if alert_sound == null:
-		push_warning("CREATURE: AlertSound not found. Check alert_sound_path.")
-
-	if catch_sound == null:
-		push_warning("CREATURE: CatchSound not found. Check catch_sound_path.")
 
 	los_seen_material.albedo_color = Color(0.0, 1.0, 0.0, 1.0)
 	los_blocked_material.albedo_color = Color(1.0, 0.0, 0.0, 1.0)
@@ -134,6 +119,7 @@ func _physics_process(delta: float) -> void:
 		target = get_node_or_null(target_path)
 		return
 
+	# If all players are caught, creature enters final catch state.
 	if has_caught_player:
 		state = State.CATCH
 		play_state_animation()
@@ -200,6 +186,20 @@ func _physics_process(delta: float) -> void:
 
 	if debug_los:
 		update_los_debug_line()
+
+
+# ======================
+# MULTI-PLAYER SUPPORT
+# ======================
+func set_spawn_manager(manager: Node) -> void:
+	spawn_manager = manager
+
+
+func set_target(new_target: Node3D) -> void:
+	target = new_target
+
+	if target != null:
+		target_path = get_path_to(target)
 
 
 # ======================
@@ -343,6 +343,9 @@ func handle_wander(delta: float) -> Vector3:
 # CHASE / CATCH
 # ======================
 func chase_player(delta: float) -> Vector3:
+	if target == null:
+		return Vector3.ZERO
+
 	var direction := target.global_position - global_position
 	direction.y = 0.0
 
@@ -362,6 +365,9 @@ func chase_player(delta: float) -> Vector3:
 
 
 func is_close_enough_to_catch() -> bool:
+	if target == null:
+		return false
+
 	var flat_self := Vector3(global_position.x, 0.0, global_position.z)
 	var flat_target := Vector3(target.global_position.x, 0.0, target.global_position.z)
 
@@ -369,13 +375,32 @@ func is_close_enough_to_catch() -> bool:
 
 
 func catch_player() -> void:
-	has_caught_player = true
-	state = State.CATCH
-	velocity = Vector3.ZERO
-	play_state_animation()
+	if target == null:
+		return
 
-	if target != null and target.has_method("on_caught"):
+	if target.has_method("on_caught"):
 		target.on_caught()
+
+	if spawn_manager != null and spawn_manager.has_method("on_player_caught"):
+		spawn_manager.on_player_caught()
+
+	# If there are still uncaught players, continue hunting.
+	if spawn_manager != null and spawn_manager.has_method("all_players_caught"):
+		if spawn_manager.all_players_caught():
+			has_caught_player = true
+			state = State.CATCH
+			velocity = Vector3.ZERO
+			play_state_animation()
+		else:
+			has_caught_player = false
+			can_see_player = false
+			switch_to_wander()
+	else:
+		# Fallback for single-player setup.
+		has_caught_player = true
+		state = State.CATCH
+		velocity = Vector3.ZERO
+		play_state_animation()
 
 
 # ======================
@@ -431,6 +456,9 @@ func get_obstacle_push() -> Vector3:
 # LOS HELPERS
 # ======================
 func check_forward_los() -> bool:
+	if target == null:
+		return false
+
 	var start_pos := global_position + Vector3.UP * eye_height
 
 	var forward_dir := -global_transform.basis.z
@@ -447,6 +475,9 @@ func check_forward_los() -> bool:
 
 
 func check_direct_los_to_player() -> bool:
+	if target == null:
+		return false
+
 	var start_pos := global_position + Vector3.UP * eye_height
 	var end_pos := target.global_position + Vector3.UP * target_height
 
@@ -454,6 +485,9 @@ func check_direct_los_to_player() -> bool:
 
 
 func ray_hits_player(start_pos: Vector3, end_pos: Vector3) -> bool:
+	if target == null:
+		return false
+
 	var query := PhysicsRayQueryParameters3D.create(start_pos, end_pos)
 	query.collision_mask = los_collision_mask
 	query.exclude = [self.get_rid()]
@@ -480,7 +514,7 @@ func update_los_debug_line() -> void:
 	var start_global := global_position + Vector3.UP * eye_height
 	var end_global := start_global
 
-	if state == State.CHASE:
+	if state == State.CHASE and target != null:
 		end_global = target.global_position + Vector3.UP * target_height
 	else:
 		var forward_dir := -global_transform.basis.z

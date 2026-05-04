@@ -663,8 +663,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05557263, 0)
 [node name="CreatureSpawn" type="Marker3D" parent="ArenaRotator/Park/SpawnPoints" unique_id=672405478]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6852045, 0.13883924, 2.5999887)
 
-[node name="PlayerSpawn" type="Marker3D" parent="ArenaRotator/Park/SpawnPoints" unique_id=262261694]
+[node name="PlayerSpawn1" type="Marker3D" parent="ArenaRotator/Park/SpawnPoints" unique_id=262261694]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8354254, 0.13642693, -2.8869433)
+
+[node name="PlayerSpawn2" type="Marker3D" parent="ArenaRotator/Park/SpawnPoints" unique_id=1634365623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8354254, 0.13642693, 3.0017881)
+
+[node name="PlayerSpawn3" type="Marker3D" parent="ArenaRotator/Park/SpawnPoints" unique_id=21466508]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.628526, 0.13642693, -2.8869433)
 
 [node name="DebugOverlay" type="Node3D" parent="ArenaRotator/Park" unique_id=8828476]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.999779, 0)

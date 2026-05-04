@@ -29,7 +29,7 @@ transform = Transform3D(-0.09, 0, -1.3589623e-08, 0, 0.09, 0, 1.3589623e-08, 0, 
 
 [node name="CreatureBase" parent="ModelHolder" unique_id=1129754309 instance=ExtResource("2_bmkl7")]
 
-[node name="Skeleton3D" parent="ModelHolder/CreatureBase/RootNode/Armature" parent_id_path=PackedInt32Array(1129754309, 1891985201) index="0" unique_id=1012312408]
+[node name="Skeleton3D" parent="ModelHolder/CreatureBase/RootNode/Armature" parent_id_path=PackedInt32Array(1129754309, 511580928) index="0" unique_id=1524800627]
 bones/0/position = Vector3(0.021316022, 2.318503, -0.059820116)
 bones/0/rotation = Quaternion(0.100776844, -0.16430235, -0.016041065, 0.9811175)
 bones/1/rotation = Quaternion(-0.0069744494, -0.005190947, 0.017978413, 0.99980056)
@@ -69,31 +69,31 @@ bones/45/rotation = Quaternion(-0.39798436, 0.078701094, -0.073915735, 0.9110165
 bones/46/rotation = Quaternion(0.5299419, 0.05278315, 0.03595093, 0.84562594)
 bones/47/rotation = Quaternion(0.3667321, 0.037202556, -0.016043339, 0.9294441)
 
-[node name="mixamorig_HeadTop_End" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="0" unique_id=1536105732]
+[node name="mixamorig_HeadTop_End" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="0" unique_id=1730697625]
 transform = Transform3D(0.99642223, 0.03752713, -0.07572646, -0.037733573, 0.9992868, -0.0012974081, 0.07562375, 0.0041500553, 0.9971277, -0.0630478, 4.193696, 0.42319614)
 
-[node name="mixamorig_LeftHandThumb4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="1" unique_id=215726111]
+[node name="mixamorig_LeftHandThumb4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="1" unique_id=840621804]
 transform = Transform3D(0.75259924, -0.3883798, -0.5317461, -0.65616727, -0.5099206, -0.55625856, -0.0551086, 0.76755494, -0.638609, 0.080633506, 2.2265322, 0.92033064)
 
-[node name="mixamorig_LeftHandIndex4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="2" unique_id=82776855]
+[node name="mixamorig_LeftHandIndex4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="2" unique_id=31301503]
 transform = Transform3D(0.6250847, -0.76625866, 0.14871342, -0.7398497, -0.6423561, -0.2000005, 0.24877942, 0.014991939, -0.96844363, -0.025018964, 2.2956965, 1.1262156)
 
-[node name="mixamorig_LeftHandMiddle4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="3" unique_id=1279190793]
+[node name="mixamorig_LeftHandMiddle4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="3" unique_id=1064863492]
 transform = Transform3D(0.7895815, -0.60730135, 0.088005476, -0.5914095, -0.79136086, -0.15486032, 0.16369121, 0.07022786, -0.98400813, 0.090686105, 2.1845064, 1.1090016)
 
-[node name="mixamorig_RightHandThumb4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="4" unique_id=1013354180]
+[node name="mixamorig_RightHandThumb4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="4" unique_id=1476419031]
 transform = Transform3D(0.3582786, 0.3281597, 0.8740403, 0.7971813, 0.37974983, -0.46935123, -0.48593932, 0.86492777, -0.12554663, -0.4264462, 2.4372883, 0.7407795)
 
-[node name="mixamorig_RightHandIndex4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="5" unique_id=894366734]
+[node name="mixamorig_RightHandIndex4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="5" unique_id=294607836]
 transform = Transform3D(0.6597673, 0.33191076, 0.6741963, 0.71354675, -0.55810755, -0.42351565, 0.23570493, 0.7604931, -0.60505533, -0.45743084, 2.3942642, 0.99484867)
 
-[node name="mixamorig_RightHandMiddle4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="6" unique_id=728345101]
+[node name="mixamorig_RightHandMiddle4" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="6" unique_id=1304894009]
 transform = Transform3D(0.6808159, 0.7308513, 0.048419155, 0.7068613, -0.6729121, 0.21802443, 0.19192539, -0.11420903, -0.9747409, -0.47383156, 2.2655194, 0.8987878)
 
-[node name="mixamorig_LeftToe_End" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="7" unique_id=827967070]
+[node name="mixamorig_LeftToe_End" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="7" unique_id=415844896]
 transform = Transform3D(-0.9562479, 0.26663396, -0.12042837, -0.09652637, 0.10105474, 0.99018764, 0.27618656, 0.958486, -0.07089653, 0.86581266, 0.056836322, 0.94033855)
 
-[node name="mixamorig_RightToe_End" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="8" unique_id=1211496636]
+[node name="mixamorig_RightToe_End" parent="ModelHolder/CreatureBase/RootNode/Armature/Skeleton3D" index="8" unique_id=1239035424]
 transform = Transform3D(-0.61060226, -0.776341, 0.15645137, 0.15369275, 0.0776385, 0.98506516, -0.7768952, 0.625518, 0.07191158, -1.1528792, 0.04974299, 0.07183705)
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=444160881]
