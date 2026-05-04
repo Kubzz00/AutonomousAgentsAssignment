@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://iq0u8rg5lodh"]
+
+[ext_resource type="Script" uid="uid://c0hk1yj37bw27" path="res://Scripts/AI/BoidAgent.gd" id="1_lsimj"]
+[ext_resource type="PackedScene" uid="uid://b6hvsx8ktmm7x" path="res://Assests/Models/Creature/simple_bird.glb" id="2_pjime"]
+
+[node name="BirdBoid" type="Node3D" unique_id=1940422103]
+script = ExtResource("1_lsimj")
+animation_player_path = NodePath("BirdModel/AnimationPlayer")
+fly_animation = "Flying"
+
+[node name="BirdModel" parent="." unique_id=500627352 instance=ExtResource("2_pjime")]
+transform = Transform3D(-0.1, 0, 8.742278e-09, 0, 0.1, 0, -8.742278e-09, 0, -0.1, 0, 0, 0)
+
+[node name="Skeleton3D" parent="BirdModel/Sketchfab_model/root/GLTF_SceneRootNode/Armature_62/GLTF_created_0" parent_id_path=PackedInt32Array(500627352, 205919993) index="0" unique_id=1173756366]
+bones/1/position = Vector3(-3.8643357e-25, 8.650318e-25, 1.2882526e-24)
+bones/2/rotation = Quaternion(-0.0663142, 3.6091627e-17, 3.9672174e-17, 0.99779886)
+bones/3/rotation = Quaternion(0.16846254, -1.1750559e-07, -2.0082307e-08, 0.98570806)
+bones/5/rotation = Quaternion(-0.26338136, 0.10352558, -0.5323127, 0.79784465)
+bones/6/rotation = Quaternion(0.037058033, -0.043469973, -0.24492101, 0.9678589)
+bones/7/rotation = Quaternion(0.02042662, 0.011092586, 0.034245208, 0.9991432)
+bones/8/rotation = Quaternion(0.28934792, 0.09240935, -0.18818398, 0.9339835)
+bones/9/rotation = Quaternion(0.23731625, 0.03499393, -0.16711378, 0.9563104)
+bones/10/rotation = Quaternion(-0.26338133, -0.103525594, 0.5323127, 0.7978446)
+bones/11/rotation = Quaternion(0.03705797, 0.043469947, 0.24492098, 0.96785885)
+bones/12/rotation = Quaternion(0.020426616, -0.011092571, -0.03424521, 0.9991432)
+bones/13/rotation = Quaternion(0.28934792, -0.09240935, 0.18818404, 0.93398345)
+bones/14/rotation = Quaternion(0.23731627, -0.034993917, 0.16711377, 0.9563103)
+bones/15/rotation = Quaternion(0.7359355, 0.1479891, -0.62224805, 0.22204848)
+bones/16/rotation = Quaternion(0.2743826, 0.02112909, 0.11664562, 0.954286)
+bones/18/rotation = Quaternion(-0.096455604, -0.019849457, 0.22273825, 0.9698918)
+bones/19/rotation = Quaternion(-0.087748095, 0.007120737, 0.2405643, 0.96663254)
+bones/37/rotation = Quaternion(0.73593557, -0.1479891, 0.62224805, 0.22204852)
+bones/38/rotation = Quaternion(0.2743826, -0.021129088, -0.11664563, 0.954286)
+bones/40/rotation = Quaternion(-0.096455604, 0.019849459, -0.22273825, 0.9698918)
+bones/41/rotation = Quaternion(-0.0877481, -0.0071207453, -0.2405644, 0.9666325)
+bones/59/position = Vector3(-2.842171e-14, 0.022978753, -0.13999394)
+bones/59/rotation = Quaternion(0.99379927, -2.65097e-08, 2.369403e-07, -0.11118934)
+bones/60/rotation = Quaternion(-0.2195124, -6.261658e-14, -1.0467168e-07, 0.9756098)
+bones/61/rotation = Quaternion(-0.040214326, -9.485469e-15, -1.917569e-08, 0.99919116)
+
+[editable path="BirdModel"]

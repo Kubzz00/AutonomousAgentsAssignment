@@ -1,0 +1,421 @@
+extends CharacterBody3D
+
+@export var creature_path: NodePath
+
+# ======================
+# ANIMATION
+# ======================
+@export var animation_player_path: NodePath
+@export var idle_animation: String = "CharacterArmature|Idle"
+@export var walk_animation: String = "CharacterArmature|Walk"
+@export var run_animation: String = "CharacterArmature|Run"
+@export var caught_animation: String = "CharacterArmature|Death"
+
+# ======================
+# AUDIO
+# ======================
+@export var flee_sound_path: NodePath
+@export var caught_sound_path: NodePath
+
+var flee_sound: AudioStreamPlayer3D = null
+var caught_sound: AudioStreamPlayer3D = null
+
+# ======================
+# PARTICLES
+# ======================
+@export var death_particles_path: NodePath
+
+var death_particles: GPUParticles3D = null
+
+# ======================
+# MOVEMENT
+# ======================
+@export var walk_speed: float = 0.5
+@export var flee_speed: float = 1.35
+@export var acceleration: float = 1.4
+@export var turn_smoothing: float = 2.0
+@export var gravity: float = 9.8
+
+# ======================
+# PARK BOUNDS
+# ======================
+@export var park_min_x: float = -2.0
+@export var park_max_x: float = 2.0
+@export var park_min_z: float = -2.0
+@export var park_max_z: float = 2.0
+
+enum State {
+	IDLE,
+	WALK,
+	FLEE,
+	CAUGHT
+}
+
+var state: State = State.WALK
+var previous_state: State = State.WALK
+
+var state_timer: float = 0.0
+
+var creature: Node3D = null
+var animation_player: AnimationPlayer = null
+
+var move_direction: Vector3 = Vector3.ZERO
+var desired_direction: Vector3 = Vector3.ZERO
+
+var is_caught: bool = false
+var current_animation: String = ""
+
+
+func _ready() -> void:
+	randomize()
+
+	animation_player = get_node_or_null(animation_player_path)
+	flee_sound = get_node_or_null(flee_sound_path)
+	caught_sound = get_node_or_null(caught_sound_path)
+	death_particles = get_node_or_null(death_particles_path)
+
+	if animation_player == null:
+		push_error("PLAYER: AnimationPlayer not found. Check animation_player_path.")
+
+	if flee_sound == null:
+		push_warning("PLAYER: FleeSound not found. Check flee_sound_path.")
+
+	if caught_sound == null:
+		push_warning("PLAYER: CaughtSound not found. Check caught_sound_path.")
+
+	if death_particles == null:
+		push_warning("PLAYER: DeathParticles not found. Check death_particles_path.")
+	else:
+		death_particles.emitting = false
+
+	switch_to_walk()
+	previous_state = state
+
+
+func _physics_process(delta: float) -> void:
+	if is_caught:
+		state = State.CAUGHT
+		play_state_animation()
+
+		velocity.x = move_toward(velocity.x, 0.0, acceleration * delta)
+		velocity.z = move_toward(velocity.z, 0.0, acceleration * delta)
+
+		apply_gravity(delta)
+		move_and_slide()
+
+		handle_state_audio()
+		return
+
+	if creature == null:
+		creature = get_node_or_null(creature_path)
+		return
+
+	var desired_velocity := Vector3.ZERO
+
+	if should_flee():
+		state = State.FLEE
+		desired_velocity = flee_from_creature(delta)
+	else:
+		state_timer -= delta
+
+		match state:
+			State.IDLE:
+				desired_velocity = handle_idle()
+
+			State.WALK:
+				desired_velocity = handle_walk(delta)
+
+			State.FLEE:
+				switch_to_walk()
+				desired_velocity = handle_walk(delta)
+
+			State.CAUGHT:
+				desired_velocity = Vector3.ZERO
+
+	play_state_animation()
+
+	velocity.x = move_toward(velocity.x, desired_velocity.x, acceleration * delta)
+	velocity.z = move_toward(velocity.z, desired_velocity.z, acceleration * delta)
+
+	apply_gravity(delta)
+	move_and_slide()
+	rotate_to_velocity()
+
+	handle_state_audio()
+
+
+# ======================
+# MULTI-PLAYER SUPPORT
+# ======================
+func set_creature(new_creature: Node3D) -> void:
+	creature = new_creature
+
+	if creature != null:
+		creature_path = get_path_to(creature)
+
+
+# ======================
+# AUDIO
+# ======================
+func handle_state_audio() -> void:
+	if state == previous_state:
+		return
+
+	if state == State.FLEE:
+		if flee_sound != null and not flee_sound.playing:
+			flee_sound.play()
+
+	elif state == State.CAUGHT:
+		if flee_sound != null and flee_sound.playing:
+			flee_sound.stop()
+
+		if caught_sound != null:
+			caught_sound.play()
+
+	else:
+		if flee_sound != null and flee_sound.playing:
+			flee_sound.stop()
+
+	previous_state = state
+
+
+# ======================
+# PARTICLES
+# ======================
+func play_death_particles() -> void:
+	if death_particles == null:
+		return
+
+	death_particles.restart()
+	death_particles.emitting = true
+
+
+# ======================
+# CALLED BY CREATURE
+# ======================
+func on_caught() -> void:
+	if is_caught:
+		return
+
+	is_caught = true
+	state = State.CAUGHT
+	velocity = Vector3.ZERO
+
+	play_death_particles()
+	play_state_animation()
+	handle_state_audio()
+
+
+# ======================
+# ANIMATION
+# ======================
+func play_state_animation() -> void:
+	if animation_player == null:
+		return
+
+	var desired_animation := idle_animation
+
+	match state:
+		State.IDLE:
+			desired_animation = idle_animation
+		State.WALK:
+			desired_animation = walk_animation
+		State.FLEE:
+			desired_animation = run_animation
+		State.CAUGHT:
+			desired_animation = caught_animation
+
+	play_animation(desired_animation)
+
+
+func play_animation(animation_name: String) -> void:
+	if animation_player == null:
+		return
+
+	if animation_name == "":
+		return
+
+	if current_animation == animation_name:
+		return
+
+	if not animation_player.has_animation(animation_name):
+		push_warning("PLAYER animation not found: " + animation_name)
+		return
+
+	current_animation = animation_name
+	animation_player.play(animation_name)
+
+
+# ======================
+# DANGER / FLEE LOGIC
+# ======================
+func should_flee() -> bool:
+	if creature == null:
+		return false
+
+	if creature.get("has_caught_player") == true:
+		return false
+
+	# Reliable demo logic:
+	# Player flees when creature has line-of-sight.
+	return creature.get("can_see_player") == true
+
+
+# ======================
+# FLEE
+# ======================
+func flee_from_creature(delta: float) -> Vector3:
+	var away := global_position - creature.global_position
+	away.y = 0.0
+
+	if away.length() < 0.05:
+		away = Vector3.FORWARD
+
+	var edge_push := get_edge_push()
+	var target_dir := (away.normalized() + edge_push).normalized()
+
+	move_direction = move_direction.lerp(target_dir, turn_smoothing * delta)
+
+	if move_direction.length() < 0.05:
+		move_direction = target_dir
+
+	move_direction = move_direction.normalized()
+
+	return move_direction * flee_speed
+
+
+# ======================
+# IDLE
+# ======================
+func handle_idle() -> Vector3:
+	if state_timer <= 0.0:
+		switch_to_walk()
+
+	return Vector3.ZERO
+
+
+# ======================
+# WALK / WANDER
+# ======================
+func handle_walk(delta: float) -> Vector3:
+	if state_timer <= 0.0:
+		switch_to_idle()
+		return Vector3.ZERO
+
+	var edge_push := get_edge_push()
+	var target_dir := (desired_direction + edge_push).normalized()
+
+	move_direction = move_direction.lerp(target_dir, turn_smoothing * delta)
+
+	if move_direction.length() < 0.05:
+		move_direction = target_dir
+
+	move_direction = move_direction.normalized()
+
+	return move_direction * walk_speed
+
+
+func switch_to_walk() -> void:
+	state = State.WALK
+	state_timer = randf_range(3.0, 5.5)
+
+	desired_direction = Vector3(
+		randf_range(-1.0, 1.0),
+		0.0,
+		randf_range(-1.0, 1.0)
+	).normalized()
+
+	if desired_direction.length() < 0.05:
+		desired_direction = Vector3.FORWARD
+
+	if move_direction.length() < 0.05:
+		move_direction = desired_direction
+
+	play_state_animation()
+
+
+func switch_to_idle() -> void:
+	state = State.IDLE
+	state_timer = randf_range(0.7, 1.5)
+	play_state_animation()
+
+
+# ======================
+# EDGE AVOIDANCE
+# ======================
+func get_edge_push() -> Vector3:
+	var push := Vector3.ZERO
+	var margin := 0.8
+
+	if global_position.x < park_min_x + margin:
+		push.x += 1.0
+	elif global_position.x > park_max_x - margin:
+		push.x -= 1.0
+
+	if global_position.z < park_min_z + margin:
+		push.z += 1.0
+	elif global_position.z > park_max_z - margin:
+		push.z -= 1.0
+
+	return push
+
+
+# ======================
+# GRAVITY
+# ======================
+func apply_gravity(delta: float) -> void:
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	else:
+		velocity.y = 0.0
+
+
+# ======================
+# ROTATION
+# ======================
+func rotate_to_velocity() -> void:
+	var flat_velocity := Vector3(velocity.x, 0.0, velocity.z)
+
+	if flat_velocity.length() > 0.1:
+		look_at(global_position + flat_velocity, Vector3.UP)
+
+
+# ======================
+# RESET SUPPORT
+# ======================
+func reset_agent() -> void:
+	is_caught = false
+	velocity = Vector3.ZERO
+
+	move_direction = Vector3.ZERO
+	desired_direction = Vector3.ZERO
+
+	creature = get_node_or_null(creature_path)
+
+	if flee_sound != null and flee_sound.playing:
+		flee_sound.stop()
+
+	if death_particles != null:
+		death_particles.emitting = false
+
+	switch_to_walk()
+	play_state_animation()
+
+	previous_state = state
+
+
+# ======================
+# DEBUG OVERLAY SUPPORT
+# ======================
+func get_state_name() -> String:
+	match state:
+		State.IDLE:
+			return "IDLE"
+		State.WALK:
+			return "WALK"
+		State.FLEE:
+			return "FLEE"
+		State.CAUGHT:
+			return "CAUGHT"
+		_:
+			return "UNKNOWN"
