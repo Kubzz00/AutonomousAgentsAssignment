@@ -57,3 +57,4 @@ shaders/enabled=true
 openxr/extensions/meta/passthrough=true
 openxr/extensions/meta/render_model=true
 openxr/extensions/meta/simultaneous_hands_and_controllers=true
+openxr/extensions/htc/passthrough=true
