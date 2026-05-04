@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bd7x7isx0isqd"]
 
-[ext_resource type="PackedScene" uid="uid://y3hrvsorpy0x" path="res://Assests/Animations/Breathing Idle.fbx" id="1_0px12"]
 [ext_resource type="Script" uid="uid://dv2s2j1rnufnr" path="res://Scripts/AI/CreatureBrain.gd" id="1_bmkl7"]
+[ext_resource type="PackedScene" uid="uid://xsaolxpxmntk" path="res://Assests/Models/Creature/CreatureBase.glb" id="2_bmkl7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bmkl7"]
 radius = 0.044921875
@@ -15,9 +15,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021995008, 0.17388487, -0
 shape = SubResource("CapsuleShape3D_bmkl7")
 
 [node name="ModelHolder" type="Node3D" parent="." unique_id=142114552]
-transform = Transform3D(-0.2, 0, -1.7484556e-08, 0, 0.2, 0, 1.7484556e-08, 0, -0.2, 0, 0, 0)
+transform = Transform3D(-0.1, 0, -1.509958e-08, 0, 0.1, 0, 1.509958e-08, 0, -0.1, 0, 0, 0)
 
-[node name="CreatureModel" parent="ModelHolder" unique_id=1011530176 instance=ExtResource("1_0px12")]
+[node name="CreatureBase" parent="ModelHolder" unique_id=1661359800 instance=ExtResource("2_bmkl7")]
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=444160881]
 target_position = Vector3(0, 0, -1)
