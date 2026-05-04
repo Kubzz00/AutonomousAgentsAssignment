@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://hwavodk3la5p"]
 
-[ext_resource type="PackedScene" uid="uid://y3hrvsorpy0x" path="res://Assests/Animations/Breathing Idle.fbx" id="1_0650h"]
+[ext_resource type="PackedScene" uid="uid://bjiblehuvvb4y" path="res://Assests/Models/Player/PlayerIdle.glb" id="2_c75jm"]
 [ext_resource type="Script" uid="uid://cxwpjexvqo4lc" path="res://Scripts/AI/PlayerBrain.gd" id="2_o2x2e"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o2x2e"]
@@ -18,4 +18,4 @@ shape = SubResource("CapsuleShape3D_o2x2e")
 [node name="ModelHolder" type="Node3D" parent="." unique_id=783199352]
 transform = Transform3D(-0.2, 0, -3.019916e-08, 0, 0.2, 0, 3.019916e-08, 0, -0.2, 0, 0, 0)
 
-[node name="PlayerModel" parent="ModelHolder" unique_id=1011530176 instance=ExtResource("1_0650h")]
+[node name="Root Scene" parent="ModelHolder" unique_id=1028881564 instance=ExtResource("2_c75jm")]
