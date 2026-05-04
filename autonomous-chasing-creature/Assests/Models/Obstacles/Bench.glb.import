@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bfeygiv4n7ha8"
-path="res://.godot/imported/Crouching Idle.fbx-f7c44d48ce874ef7510bbbc1f2b3d6d3.scn"
+uid="uid://b37gcpvq6pyv8"
+path="res://.godot/imported/Bench.glb-91510061acbed0a18ba08f09dd471ac4.scn"
 
 [deps]
 
-source_file="res://Assests/Animations/Crouching Idle.fbx"
-dest_files=["res://.godot/imported/Crouching Idle.fbx-f7c44d48ce874ef7510bbbc1f2b3d6d3.scn"]
+source_file="res://Assests/Models/Obstacles/Bench.glb"
+dest_files=["res://.godot/imported/Bench.glb-91510061acbed0a18ba08f09dd471ac4.scn"]
 
 [params]
 
@@ -30,7 +30,7 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=true
+animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
@@ -38,7 +38,5 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={}
-fbx/importer=0
-fbx/allow_geometry_helper_nodes=false
-fbx/embedded_image_handling=1
-fbx/naming_version=2
+gltf/naming_version=2
+gltf/embedded_image_handling=1

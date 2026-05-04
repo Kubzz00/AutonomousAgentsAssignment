@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b31bmwn3kmt78"
-path="res://.godot/imported/Tree.glb-e9d3c0f980a7bf18dce23c544cf0f4bf.scn"
+uid="uid://cjjgwjlsosucc"
+path="res://.godot/imported/Fountain.glb-64dfa1b7b4bfcf57e09de8fddd557be2.scn"
 
 [deps]
 
-source_file="res://Assests/Models/Tree.glb"
-dest_files=["res://.godot/imported/Tree.glb-e9d3c0f980a7bf18dce23c544cf0f4bf.scn"]
+source_file="res://Assests/Models/Obstacles/Fountain.glb"
+dest_files=["res://.godot/imported/Fountain.glb-64dfa1b7b4bfcf57e09de8fddd557be2.scn"]
 
 [params]
 

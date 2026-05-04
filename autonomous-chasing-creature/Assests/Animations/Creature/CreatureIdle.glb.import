@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bre64s7caramm"
-path="res://.godot/imported/Hedge Straight Long.glb-2a47e9cbfed76b1df77c23f6cca93bbd.scn"
+uid="uid://wftmuqom75j"
+path="res://.godot/imported/CreatureIdle.glb-d5c360ce41d86f49a0cb10f4acbcd167.scn"
 
 [deps]
 
-source_file="res://Assests/Models/Hedge Straight Long.glb"
-dest_files=["res://.godot/imported/Hedge Straight Long.glb-2a47e9cbfed76b1df77c23f6cca93bbd.scn"]
+source_file="res://Assests/Animations/Creature/CreatureIdle.glb"
+dest_files=["res://.godot/imported/CreatureIdle.glb-d5c360ce41d86f49a0cb10f4acbcd167.scn"]
 
 [params]
 

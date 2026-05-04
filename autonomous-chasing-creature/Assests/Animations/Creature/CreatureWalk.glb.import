@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bl2is5fh0b3ga"
-path="res://.godot/imported/Zombie Punching.fbx-87cac1203d235f0c81b86ca25d07c17f.scn"
+uid="uid://c6kswe7icnlvb"
+path="res://.godot/imported/CreatureWalk.glb-30db3947162e1f125afa022f5abfc515.scn"
 
 [deps]
 
-source_file="res://Assests/Animations/Zombie Punching.fbx"
-dest_files=["res://.godot/imported/Zombie Punching.fbx-87cac1203d235f0c81b86ca25d07c17f.scn"]
+source_file="res://Assests/Animations/Creature/CreatureWalk.glb"
+dest_files=["res://.godot/imported/CreatureWalk.glb-30db3947162e1f125afa022f5abfc515.scn"]
 
 [params]
 
@@ -30,7 +30,7 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=true
+animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
@@ -38,7 +38,5 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={}
-fbx/importer=0
-fbx/allow_geometry_helper_nodes=false
-fbx/embedded_image_handling=1
-fbx/naming_version=2
+gltf/naming_version=2
+gltf/embedded_image_handling=1

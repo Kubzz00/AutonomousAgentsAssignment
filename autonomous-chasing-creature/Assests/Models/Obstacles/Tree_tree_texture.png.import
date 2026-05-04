@@ -2,21 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6onawx2cpeu0"
-path.s3tc="res://.godot/imported/Hedge Straight Long_tiny_treats_texture_1.png-7f1b7f1a3d3a8b7f8e55d89e40b13523.s3tc.ctex"
-path.etc2="res://.godot/imported/Hedge Straight Long_tiny_treats_texture_1.png-7f1b7f1a3d3a8b7f8e55d89e40b13523.etc2.ctex"
+uid="uid://b8d8o1w2rjvie"
+path.s3tc="res://.godot/imported/Tree_tree_texture.png-199eb99b459ef23cc2d6283f39ce6368.s3tc.ctex"
+path.etc2="res://.godot/imported/Tree_tree_texture.png-199eb99b459ef23cc2d6283f39ce6368.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "ceec4f0b431de13e4a7c04db5201ca7a"
+"md5": "e8869372908c5e95a7d127e20dd0f35d"
 }
 
 [deps]
 
-source_file="res://Assests/Models/Hedge Straight Long_tiny_treats_texture_1.png"
-dest_files=["res://.godot/imported/Hedge Straight Long_tiny_treats_texture_1.png-7f1b7f1a3d3a8b7f8e55d89e40b13523.s3tc.ctex", "res://.godot/imported/Hedge Straight Long_tiny_treats_texture_1.png-7f1b7f1a3d3a8b7f8e55d89e40b13523.etc2.ctex"]
+source_file="res://Assests/Models/Obstacles/Tree_tree_texture.png"
+dest_files=["res://.godot/imported/Tree_tree_texture.png-199eb99b459ef23cc2d6283f39ce6368.s3tc.ctex", "res://.godot/imported/Tree_tree_texture.png-199eb99b459ef23cc2d6283f39ce6368.etc2.ctex"]
 
 [params]
 

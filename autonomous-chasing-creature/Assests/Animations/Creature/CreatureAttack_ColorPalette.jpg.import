@@ -2,21 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ce7uu7ijknqaj"
-path.s3tc="res://.godot/imported/Fountain_PUSHILIN_fountain.png-bf0bb896614eda7dae4c1c518da628f0.s3tc.ctex"
-path.etc2="res://.godot/imported/Fountain_PUSHILIN_fountain.png-bf0bb896614eda7dae4c1c518da628f0.etc2.ctex"
+uid="uid://cxicyv36wgam6"
+path.s3tc="res://.godot/imported/CreatureAttack_ColorPalette.jpg-a3e9caccd6796b73d1632bf01eb09f47.s3tc.ctex"
+path.etc2="res://.godot/imported/CreatureAttack_ColorPalette.jpg-a3e9caccd6796b73d1632bf01eb09f47.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "f78bfc33464123e91b3f2da3d4aa5f13"
+"md5": "d2a7b96c9bb284011fb650d9514233c1"
 }
 
 [deps]
 
-source_file="res://Assests/Models/Fountain_PUSHILIN_fountain.png"
-dest_files=["res://.godot/imported/Fountain_PUSHILIN_fountain.png-bf0bb896614eda7dae4c1c518da628f0.s3tc.ctex", "res://.godot/imported/Fountain_PUSHILIN_fountain.png-bf0bb896614eda7dae4c1c518da628f0.etc2.ctex"]
+source_file="res://Assests/Animations/Creature/CreatureAttack_ColorPalette.jpg"
+dest_files=["res://.godot/imported/CreatureAttack_ColorPalette.jpg-a3e9caccd6796b73d1632bf01eb09f47.s3tc.ctex", "res://.godot/imported/CreatureAttack_ColorPalette.jpg-a3e9caccd6796b73d1632bf01eb09f47.etc2.ctex"]
 
 [params]
 

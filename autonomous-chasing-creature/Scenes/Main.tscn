@@ -3,14 +3,14 @@
 [ext_resource type="PackedScene" uid="uid://cjbc6g3wo5iuq" path="res://Scenes/XR/XRObserverRig.tscn" id="1_r150o"]
 [ext_resource type="Script" uid="uid://dxq7ffguv072x" path="res://Scripts/Systems/ArenaRotator.gd" id="2_50glp"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="2_idj7w"]
-[ext_resource type="PackedScene" uid="uid://b37gcpvq6pyv8" path="res://Assests/Models/Bench.glb" id="2_jw32o"]
-[ext_resource type="PackedScene" uid="uid://cjjgwjlsosucc" path="res://Assests/Models/Fountain.glb" id="3_50glp"]
-[ext_resource type="PackedScene" uid="uid://bre64s7caramm" path="res://Assests/Models/Hedge Straight Long.glb" id="3_rgh2o"]
+[ext_resource type="PackedScene" uid="uid://b37gcpvq6pyv8" path="res://Assests/Models/Obstacles/Bench.glb" id="2_jw32o"]
+[ext_resource type="PackedScene" uid="uid://cjjgwjlsosucc" path="res://Assests/Models/Obstacles/Fountain.glb" id="3_50glp"]
+[ext_resource type="PackedScene" uid="uid://bre64s7caramm" path="res://Assests/Models/Obstacles/Hedge Straight Long.glb" id="3_rgh2o"]
 [ext_resource type="Script" uid="uid://bf45tbp4laxgn" path="res://Scripts/Systems/SpawnManager.gd" id="3_vy5pj"]
 [ext_resource type="PackedScene" uid="uid://bd7x7isx0isqd" path="res://Scenes/Agents/Creature/Creature.tscn" id="4_4kpch"]
-[ext_resource type="PackedScene" uid="uid://sll6tdr0h5nk" path="res://Assests/Models/Gazebo.glb" id="4_vy5pj"]
+[ext_resource type="PackedScene" uid="uid://sll6tdr0h5nk" path="res://Assests/Models/Obstacles/Gazebo.glb" id="4_vy5pj"]
 [ext_resource type="PackedScene" uid="uid://hwavodk3la5p" path="res://Scenes/Agents/Player/PlayerAgent.tscn" id="5_grg3l"]
-[ext_resource type="PackedScene" uid="uid://byeyfbl8vycck" path="res://Assests/Models/Bush.glb" id="6_jw32o"]
+[ext_resource type="PackedScene" uid="uid://byeyfbl8vycck" path="res://Assests/Models/Obstacles/Bush.glb" id="6_jw32o"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgh2o"]
 albedo_color = Color(0.13204214, 0.426018, 0.12290784, 1)
@@ -88,7 +88,7 @@ transform = Transform3D(-0.5998599, 0, 0.012963234, 0, 0.6, 0, -0.012963234, 0, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05634308, -0.03149414, -0.0007324219)
 shape = SubResource("BoxShape3D_kln2b")
 
-[node name="Bench" parent="ArenaRotator/Park/Obstacles/Bench/Obstacle_Bench" unique_id=1168158566 instance=ExtResource("2_jw32o")]
+[node name="Bench" parent="ArenaRotator/Park/Obstacles/Bench/Obstacle_Bench" unique_id=949177473 instance=ExtResource("2_jw32o")]
 
 [node name="Obstacle_Bench2" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bench" unique_id=1266266386]
 transform = Transform3D(-0.011717354, 0, -0.5998855, 0, 0.6, 0, 0.5998855, 0, -0.011717354, -0.016262546, 0.2660457, 0.9387623)
@@ -97,7 +97,7 @@ transform = Transform3D(-0.011717354, 0, -0.5998855, 0, 0.6, 0, 0.5998855, 0, -0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05634308, -0.03149414, -0.0007324219)
 shape = SubResource("BoxShape3D_kln2b")
 
-[node name="Bench" parent="ArenaRotator/Park/Obstacles/Bench/Obstacle_Bench2" unique_id=830206118 instance=ExtResource("2_jw32o")]
+[node name="Bench" parent="ArenaRotator/Park/Obstacles/Bench/Obstacle_Bench2" unique_id=242509206 instance=ExtResource("2_jw32o")]
 
 [node name="Obstacle_Bench3" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bench" unique_id=1206095953]
 transform = Transform3D(0.5999915, 0, -0.0031938897, 0, 0.6000001, 0, 0.0031938897, 0, 0.5999915, 0.84938747, 0.2660457, 0.07862949)
@@ -106,7 +106,7 @@ transform = Transform3D(0.5999915, 0, -0.0031938897, 0, 0.6000001, 0, 0.00319388
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05634308, -0.03149414, -0.0007324219)
 shape = SubResource("BoxShape3D_kln2b")
 
-[node name="Bench" parent="ArenaRotator/Park/Obstacles/Bench/Obstacle_Bench3" unique_id=1938465432 instance=ExtResource("2_jw32o")]
+[node name="Bench" parent="ArenaRotator/Park/Obstacles/Bench/Obstacle_Bench3" unique_id=2116100274 instance=ExtResource("2_jw32o")]
 
 [node name="Obstacle_Bench4" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bench" unique_id=561558974]
 transform = Transform3D(-0.002848448, 0, 0.59999317, 0, 0.6, 0, -0.59999317, 0, -0.002848448, -0.04746467, 0.2660457, -0.77663064)
@@ -115,7 +115,7 @@ transform = Transform3D(-0.002848448, 0, 0.59999317, 0, 0.6, 0, -0.59999317, 0, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05634308, -0.03149414, -0.0007324219)
 shape = SubResource("BoxShape3D_kln2b")
 
-[node name="Bench" parent="ArenaRotator/Park/Obstacles/Bench/Obstacle_Bench4" unique_id=2010742104 instance=ExtResource("2_jw32o")]
+[node name="Bench" parent="ArenaRotator/Park/Obstacles/Bench/Obstacle_Bench4" unique_id=617189228 instance=ExtResource("2_jw32o")]
 
 [node name="Bushes" type="Node3D" parent="ArenaRotator/Park/Obstacles" unique_id=392285726]
 
@@ -126,7 +126,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1035078, 0.1161139, 3.4277
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush" unique_id=977005791 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush" unique_id=1806590817 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush37" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=857249060]
@@ -136,7 +136,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9806252, 0.1161139, 1.0219
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush37" unique_id=1315736111 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush37" unique_id=1129847825 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush38" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=842571501]
@@ -146,7 +146,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2928178, 0.1161139, 1.0143
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush38" unique_id=755439707 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush38" unique_id=1867399934 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush39" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1674059140]
@@ -156,7 +156,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5491, 0.1161139, 1.0031509
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush39" unique_id=2140455336 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush39" unique_id=1066181351 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush40" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1236326422]
@@ -166,7 +166,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.031725, 0.1161139, 1.013423
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush40" unique_id=1435923915 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush40" unique_id=116739882 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush41" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1162211579]
@@ -176,7 +176,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3926117, 0.1161139, 1.02050
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush41" unique_id=1430174003 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush41" unique_id=1193831993 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush42" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=20767588]
@@ -186,7 +186,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8494289, 0.1161139, 1.02587
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush42" unique_id=219408160 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush42" unique_id=1231501105 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush43" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=2117132261]
@@ -196,7 +196,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2462791, 0.1161139, 1.02587
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush43" unique_id=5275449 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush43" unique_id=1713575505 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush2" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=879922009]
@@ -206,7 +206,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3540244, 0.1161139, 3.4277
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush2" unique_id=1697856153 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush2" unique_id=801213949 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush3" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=333332202]
@@ -216,7 +216,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5962276, 0.1161139, 3.4277
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush3" unique_id=1073198412 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush3" unique_id=256310972 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush4" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1756842473]
@@ -226,7 +226,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.83292675, 0.1161139, 3.414
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush4" unique_id=929925468 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush4" unique_id=1981720600 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush5" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1876015825]
@@ -236,7 +236,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12223625, 0.1161139, 3.414
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush5" unique_id=90247451 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush5" unique_id=377521212 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush6" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=2054377813]
@@ -246,7 +246,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6241085, 0.1161139, 3.41417
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush6" unique_id=1514862655 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush6" unique_id=1899123116 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush7" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=444645964]
@@ -256,7 +256,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3667238, 0.1161139, 3.41417
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush7" unique_id=577381113 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush7" unique_id=1651074938 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush8" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=211695898]
@@ -266,7 +266,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1053178, 0.1161139, 3.41417
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush8" unique_id=1174771313 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush8" unique_id=2082748055 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush9" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=455744172]
@@ -276,7 +276,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8532226, 0.1161139, 3.41417
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush9" unique_id=870457148 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush9" unique_id=255683592 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush10" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1805265001]
@@ -286,7 +286,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.37
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush10" unique_id=614757387 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush10" unique_id=342865967 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush11" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1021706096]
@@ -296,7 +296,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.37
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush11" unique_id=1861215287 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush11" unique_id=1514184328 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush12" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1759180179]
@@ -306,7 +306,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.37
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush12" unique_id=140206074 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush12" unique_id=497388319 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush13" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1455074703]
@@ -316,7 +316,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.37
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush13" unique_id=750805641 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush13" unique_id=2087625688 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush14" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1163792368]
@@ -326,7 +326,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.37
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush14" unique_id=58782950 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush14" unique_id=775578312 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush15" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=941472017]
@@ -336,7 +336,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.37
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush15" unique_id=962663356 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush15" unique_id=1060050875 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush16" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=799921349]
@@ -346,7 +346,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.37
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush16" unique_id=938408470 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush16" unique_id=1794385371 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush17" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=503191226]
@@ -356,7 +356,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.37
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush17" unique_id=1947651485 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush17" unique_id=880617579 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush18" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=921341632]
@@ -366,7 +366,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.37
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush18" unique_id=805596328 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush18" unique_id=1290374112 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush19" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=515228820]
@@ -376,7 +376,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.080596, 0.1161139, -3.35470
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush19" unique_id=1661094190 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush19" unique_id=1929674465 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush20" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=338926501]
@@ -386,7 +386,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3402953, 0.1161139, -3.3547
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush20" unique_id=1873098307 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush20" unique_id=666690405 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush21" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=755958029]
@@ -396,7 +396,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5727012, 0.1161139, -3.3547
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush21" unique_id=1900842981 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush21" unique_id=1337513428 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush22" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=744086877]
@@ -406,7 +406,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.82292414, 0.1161139, -3.354
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush22" unique_id=424663328 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush22" unique_id=46491794 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush23" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1034866616]
@@ -416,7 +416,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.062144935, 0.1161139, -3.35
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush23" unique_id=1363473268 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush23" unique_id=455131339 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush24" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=851359355]
@@ -426,7 +426,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.71110046, 0.1161139, -3.35
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush24" unique_id=2064697656 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush24" unique_id=364778650 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush25" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=495373838]
@@ -436,7 +436,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4529557, 0.1161139, -3.354
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush25" unique_id=1500033523 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush25" unique_id=2013002426 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush26" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1968835993]
@@ -446,7 +446,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2122693, 0.1161139, -3.354
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush26" unique_id=1032691752 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush26" unique_id=234973644 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush27" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=407965179]
@@ -456,7 +456,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8791413, 0.1161139, -3.354
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush27" unique_id=1792626808 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush27" unique_id=210431397 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush28" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=220852849]
@@ -466,7 +466,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush28" unique_id=215679800 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush28" unique_id=1238268331 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush29" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=637009615]
@@ -476,7 +476,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush29" unique_id=99166582 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush29" unique_id=1297999782 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush30" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=561669318]
@@ -486,7 +486,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush30" unique_id=2063928310 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush30" unique_id=1446804153 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush31" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1625802524]
@@ -496,7 +496,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush31" unique_id=510079522 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush31" unique_id=749208101 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush32" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=1184083902]
@@ -506,7 +506,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush32" unique_id=1120123958 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush32" unique_id=1966782391 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush33" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=11592966]
@@ -516,7 +516,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush33" unique_id=1525369071 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush33" unique_id=631771528 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush34" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=710250590]
@@ -526,7 +526,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush34" unique_id=817644997 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush34" unique_id=69746483 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush35" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=481949508]
@@ -536,7 +536,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush35" unique_id=1520185451 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush35" unique_id=834412923 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Obstacle_Bush36" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/Bushes" unique_id=343197876]
@@ -546,7 +546,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001159668, 0.15133667, -0.010803223)
 shape = SubResource("BoxShape3D_pbw6q")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush36" unique_id=452820072 instance=ExtResource("3_rgh2o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/Bushes/Obstacle_Bush36" unique_id=1307449766 instance=ExtResource("3_rgh2o")]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Fountain" type="Node3D" parent="ArenaRotator/Park/Obstacles" unique_id=1992141746]
@@ -559,7 +559,7 @@ transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.0072146654, 0.442152
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.028943568, -0.029968262, 0.051401854)
 shape = SubResource("CylinderShape3D_pbw6q")
 
-[node name="Fountain" parent="ArenaRotator/Park/Obstacles/Fountain/Obstacle_Fountain" unique_id=556104050 instance=ExtResource("3_50glp")]
+[node name="Fountain" parent="ArenaRotator/Park/Obstacles/Fountain/Obstacle_Fountain" unique_id=1328398290 instance=ExtResource("3_50glp")]
 
 [node name="Gazebo" type="Node3D" parent="ArenaRotator/Park/Obstacles" unique_id=584867405]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14579129, 2.1483314)
@@ -571,7 +571,7 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4017324, 0)
 shape = SubResource("CylinderShape3D_50glp")
 
-[node name="Gazebo" parent="ArenaRotator/Park/Obstacles/Gazebo/Obstacle_Gazebo" unique_id=1173520739 instance=ExtResource("4_vy5pj")]
+[node name="Gazebo" parent="ArenaRotator/Park/Obstacles/Gazebo/Obstacle_Gazebo" unique_id=623512656 instance=ExtResource("4_vy5pj")]
 
 [node name="SmallBush" type="Node3D" parent="ArenaRotator/Park/Obstacles" unique_id=1047735453]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -2.5605729, 0.13311088, -2.5429912)
@@ -583,7 +583,7 @@ transform = Transform3D(0.27723074, 0, 0.9608034, 0, 1, 0, -0.9608034, 0, 0.2772
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013427734, 0.068237305, 0.0054473877)
 shape = SubResource("BoxShape3D_vy5pj")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush" unique_id=1466892979 instance=ExtResource("6_jw32o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush" unique_id=372727836 instance=ExtResource("6_jw32o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05557263, 0)
 
 [node name="Obstacle_SmallBush2" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/SmallBush" unique_id=410446326]
@@ -593,7 +593,7 @@ transform = Transform3D(-0.787172, 0, 0.6167337, 0, 1, 0, -0.6167337, 0, -0.7871
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013427734, 0.068237305, 0.0054473877)
 shape = SubResource("BoxShape3D_vy5pj")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush2" unique_id=1638787378 instance=ExtResource("6_jw32o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush2" unique_id=597319393 instance=ExtResource("6_jw32o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05557263, 0)
 
 [node name="Obstacle_SmallBush3" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/SmallBush" unique_id=1866754901]
@@ -603,7 +603,7 @@ transform = Transform3D(-0.06655252, 0, -0.99778306, 0, 1, 0, 0.99778306, 0, -0.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013427734, 0.068237305, 0.0054473877)
 shape = SubResource("BoxShape3D_vy5pj")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush3" unique_id=1475784705 instance=ExtResource("6_jw32o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush3" unique_id=935813655 instance=ExtResource("6_jw32o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05557263, 0)
 
 [node name="Obstacle_SmallBush4" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/SmallBush" unique_id=1916479513]
@@ -613,7 +613,7 @@ transform = Transform3D(0.8147234, 0, -0.57985014, 0, 1, 0, 0.57985014, 0, 0.814
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013427734, 0.068237305, 0.0054473877)
 shape = SubResource("BoxShape3D_vy5pj")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush4" unique_id=1436174421 instance=ExtResource("6_jw32o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush4" unique_id=751112504 instance=ExtResource("6_jw32o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05557263, 0)
 
 [node name="Obstacle_SmallBush5" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/SmallBush" unique_id=2017799424]
@@ -623,7 +623,7 @@ transform = Transform3D(-0.082616806, 0, -0.99658173, 0, 1, 0, 0.99658173, 0, -0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013427734, 0.068237305, 0.0054473877)
 shape = SubResource("BoxShape3D_vy5pj")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush5" unique_id=228363005 instance=ExtResource("6_jw32o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush5" unique_id=1821133065 instance=ExtResource("6_jw32o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05557263, 0)
 
 [node name="Obstacle_SmallBush6" type="StaticBody3D" parent="ArenaRotator/Park/Obstacles/SmallBush" unique_id=599573932]
@@ -633,7 +633,7 @@ transform = Transform3D(-0.9831947, 0, 0.18256156, 0, 1, 0, -0.18256156, 0, -0.9
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013427734, 0.068237305, 0.0054473877)
 shape = SubResource("BoxShape3D_vy5pj")
 
-[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush6" unique_id=918765890 instance=ExtResource("6_jw32o")]
+[node name="Bush" parent="ArenaRotator/Park/Obstacles/SmallBush/Obstacle_SmallBush6" unique_id=153450720 instance=ExtResource("6_jw32o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05557263, 0)
 
 [node name="SpawnPoints" type="Node3D" parent="ArenaRotator/Park" unique_id=1509491440]

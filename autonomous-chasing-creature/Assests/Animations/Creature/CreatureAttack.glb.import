@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b37gcpvq6pyv8"
-path="res://.godot/imported/Bench.glb-fb9bd08138b9b53255c6e72b59190a29.scn"
+uid="uid://b6ksx38v6fama"
+path="res://.godot/imported/CreatureAttack.glb-a4068553e0454ae2d019cb21bebc010f.scn"
 
 [deps]
 
-source_file="res://Assests/Models/Bench.glb"
-dest_files=["res://.godot/imported/Bench.glb-fb9bd08138b9b53255c6e72b59190a29.scn"]
+source_file="res://Assests/Animations/Creature/CreatureAttack.glb"
+dest_files=["res://.godot/imported/CreatureAttack.glb-a4068553e0454ae2d019cb21bebc010f.scn"]
 
 [params]
 

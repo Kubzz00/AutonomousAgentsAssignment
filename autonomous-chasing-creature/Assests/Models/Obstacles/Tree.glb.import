@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dqrk7pmy68hw7"
-path="res://.godot/imported/Park Bench.glb-ee56998e6e60c931c77df9c09f6e73b5.scn"
+uid="uid://b31bmwn3kmt78"
+path="res://.godot/imported/Tree.glb-2d3b4b440c108dfb0683e886b10ff42c.scn"
 
 [deps]
 
-source_file="res://Assests/Models/Park Bench.glb"
-dest_files=["res://.godot/imported/Park Bench.glb-ee56998e6e60c931c77df9c09f6e73b5.scn"]
+source_file="res://Assests/Models/Obstacles/Tree.glb"
+dest_files=["res://.godot/imported/Tree.glb-2d3b4b440c108dfb0683e886b10ff42c.scn"]
 
 [params]
 
