@@ -14,7 +14,7 @@ extends CharacterBody3D
 # ======================
 # MOVEMENT
 # ======================
-@export var walk_speed: float = 0.4
+@export var walk_speed: float = 0.5
 @export var flee_speed: float = 1.35
 @export var acceleration: float = 1.4
 @export var turn_smoothing: float = 2.0
@@ -23,10 +23,10 @@ extends CharacterBody3D
 # ======================
 # PARK BOUNDS
 # ======================
-@export var park_min_x: float = -2.5
-@export var park_max_x: float = 2.5
-@export var park_min_z: float = -2.5
-@export var park_max_z: float = 2.5
+@export var park_min_x: float = -3.0
+@export var park_max_x: float = 3.0
+@export var park_min_z: float = -3.0
+@export var park_max_z: float = 3.0
 
 enum State {
 	IDLE,
@@ -43,14 +43,22 @@ var animation_player: AnimationPlayer = null
 
 var move_direction: Vector3 = Vector3.ZERO
 var desired_direction: Vector3 = Vector3.ZERO
-var is_caught: bool = false
 
+var is_caught: bool = false
 var current_animation: String = ""
 
 
 func _ready() -> void:
 	randomize()
+
 	animation_player = get_node_or_null(animation_player_path)
+
+	if animation_player == null:
+		push_error("PLAYER: AnimationPlayer not found. Check animation_player_path.")
+	else:
+		print("PLAYER: AnimationPlayer found: ", animation_player.get_path())
+		print("PLAYER animations: ", animation_player.get_animation_list())
+
 	switch_to_walk()
 
 
@@ -99,7 +107,9 @@ func _physics_process(delta: float) -> void:
 	rotate_to_velocity()
 
 
-# Called by CreatureBrain when captured.
+# ======================
+# CALLED BY CREATURE
+# ======================
 func on_caught() -> void:
 	is_caught = true
 	state = State.CAUGHT
@@ -140,7 +150,7 @@ func play_animation(animation_name: String) -> void:
 		return
 
 	if not animation_player.has_animation(animation_name):
-		push_warning("Player animation not found: " + animation_name)
+		push_warning("PLAYER animation not found: " + animation_name)
 		return
 
 	current_animation = animation_name

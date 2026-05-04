@@ -9,7 +9,6 @@ height = 0.36387634
 
 [node name="Creature" type="CharacterBody3D" unique_id=656889878]
 script = ExtResource("1_bmkl7")
-animation_player_path = NodePath("ModelHolder/CreatureBase/AnimationPlayer2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1297635283]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021995008, 0.17388487, -0.0016139895)
