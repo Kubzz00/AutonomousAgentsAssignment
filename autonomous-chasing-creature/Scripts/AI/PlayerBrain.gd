@@ -302,3 +302,19 @@ func reset_agent() -> void:
 
 	switch_to_walk()
 	play_state_animation()
+
+# ======================
+# DEBUG
+# ======================
+func get_state_name() -> String:
+	match state:
+		State.IDLE:
+			return "IDLE"
+		State.WALK:
+			return "WALK"
+		State.FLEE:
+			return "FLEE"
+		State.CAUGHT:
+			return "CAUGHT"
+		_:
+			return "UNKNOWN"
