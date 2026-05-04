@@ -25,6 +25,15 @@ extends Node3D
 @export var min_y: float = 0.3
 @export var max_y: float = 1.0
 
+# ======================
+# VISUAL / ANIMATION
+# ======================
+@export var animation_player_path: NodePath
+@export var fly_animation: String = ""
+@export var auto_play_fly_animation: bool = true
+
+var animation_player: AnimationPlayer = null
+
 var velocity: Vector3 = Vector3.ZERO
 var boid_manager: Node = null
 
@@ -39,6 +48,15 @@ func setup(manager: Node, start_velocity: Vector3) -> void:
 
 
 func _ready() -> void:
+	animation_player = get_node_or_null(animation_player_path)
+
+	if animation_player != null:
+		if auto_play_fly_animation:
+			play_fly_animation()
+	else:
+		if animation_player_path != NodePath(""):
+			push_warning("BOID: AnimationPlayer not found. Check animation_player_path.")
+
 	if velocity.length() < 0.05:
 		velocity = Vector3(
 			randf_range(-1.0, 1.0),
@@ -59,12 +77,38 @@ func _process(delta: float) -> void:
 
 	velocity = velocity.lerp(desired_velocity, turn_speed * delta)
 
-	# IMPORTANT:
-	# Move in LOCAL space so boids stay inside BoidManager/Park.
+	# Use local movement so boids stay inside BoidManager/Park.
 	position += velocity * delta
 
 	clamp_inside_bounds()
 	face_velocity()
+
+
+# ======================
+# ANIMATION
+# ======================
+func play_fly_animation() -> void:
+	if animation_player == null:
+		return
+
+	if fly_animation == "":
+		var animation_list := animation_player.get_animation_list()
+
+		if animation_list.size() == 0:
+			push_warning("BOID: AnimationPlayer has no animations.")
+			return
+
+		fly_animation = animation_list[0]
+
+	if not animation_player.has_animation(fly_animation):
+		push_warning("BOID: Fly animation not found: " + fly_animation)
+		return
+
+	var anim := animation_player.get_animation(fly_animation)
+	if anim != null:
+		anim.loop_mode = Animation.LOOP_LINEAR
+
+	animation_player.play(fly_animation)
 
 
 # ======================
@@ -95,8 +139,6 @@ func calculate_boids_force() -> Vector3:
 		if other_boid == null:
 			continue
 
-		# IMPORTANT:
-		# Use local positions because all boids share the same BoidManager parent.
 		var distance: float = position.distance_to(other_boid.position)
 
 		if distance <= 0.001:

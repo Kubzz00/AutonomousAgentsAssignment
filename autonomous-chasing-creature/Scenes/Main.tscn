@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://bqkydjpibcosr" path="res://Scripts/Debug/DebugOverlay.gd" id="11_grg3l"]
 [ext_resource type="Script" uid="uid://chpq1jluw4q08" path="res://Scripts/Systems/FloatingMenuController.gd" id="12_1p5hy"]
 [ext_resource type="Script" uid="uid://co0m8ffpa5pvv" path="res://Scripts/AI/BoidManager.gd" id="12_erwvk"]
+[ext_resource type="PackedScene" uid="uid://iq0u8rg5lodh" path="res://Scenes/Boids/BirdBoid.tscn" id="13_2w5on"]
 [ext_resource type="AudioStream" uid="uid://btun162b1g28a" path="res://Assests/Audio/Ambience/ambience.wav" id="13_frkhe"]
 [ext_resource type="Script" uid="uid://bypglxfr5bc3o" path="res://Scripts/Systems/FloatingMenuButton.gd" id="13_h1m7h"]
 
@@ -677,7 +678,9 @@ text = "."
 
 [node name="BoidManager" type="Node3D" parent="ArenaRotator/Park" unique_id=411887475]
 script = ExtResource("12_erwvk")
-boid_count = 15
+boid_count = 5
+boid_scene = ExtResource("13_2w5on")
+use_generated_boids = false
 boid_color = Color(0.68862945, 0.49668628, 0.0713793, 1)
 
 [node name="BoidSpawnArea" type="Marker3D" parent="ArenaRotator/Park/BoidManager" unique_id=887964379]
