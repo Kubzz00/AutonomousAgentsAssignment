@@ -12,6 +12,24 @@ height = 0.38763428
 
 [sub_resource type="SphereMesh" id="SphereMesh_o2x2e"]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7bnb1"]
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.5
+gravity = Vector3(0, -4, 0)
+scale_min = 0.03
+scale_max = 0.08
+color = Color(0.9812109, 0.10945272, 0.17967016, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ps3yb"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_oadkl"]
+material = SubResource("StandardMaterial3D_ps3yb")
+radius = 0.1
+height = 0.2
+
 [node name="PlayerAgent" type="CharacterBody3D" unique_id=1156323180]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 script = ExtResource("2_o2x2e")
@@ -122,5 +140,16 @@ volume_db = -8.804
 [node name="CaughtSound" type="AudioStreamPlayer3D" parent="." unique_id=536709858]
 stream = ExtResource("5_ps3yb")
 volume_db = -5.742
+
+[node name="DeathParticles" type="GPUParticles3D" parent="." unique_id=1999103632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21451569, 0)
+emitting = false
+amount = 40
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+randomness = 0.7
+process_material = SubResource("ParticleProcessMaterial_7bnb1")
+draw_pass_1 = SubResource("SphereMesh_oadkl")
 
 [editable path="ModelHolder/PlayerModel"]
