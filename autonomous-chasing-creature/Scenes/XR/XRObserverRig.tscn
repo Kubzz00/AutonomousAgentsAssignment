@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://cjcehqrfoxav3" path="res://addons/hand_pose_detector/hands/LeftHandHumanoid.gltf" id="1_3sh0o"]
 [ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="2_6icq6"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_3sh0o"]
+size = Vector3(0.07069397, 0.10714722, 0.20129395)
+
 [node name="XRObserverRig" type="Node3D" unique_id=1696742314]
 
 [node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1168128541]
@@ -19,6 +22,12 @@ tracker = &"/user/hand_tracker/left"
 
 [node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/LeftHand/LeftHandHumanoid2/LeftHandHumanoid/Skeleton3D" parent_id_path=PackedInt32Array(625171745, 752269831) index="1" unique_id=1654148111]
 
+[node name="MenuPointer" type="Area3D" parent="XROrigin3D/LeftHand" unique_id=462118490 groups=["menu_pointer"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/LeftHand/MenuPointer" unique_id=1702148144]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008049011, 0.0041656494, -0.08135986)
+shape = SubResource("BoxShape3D_3sh0o")
+
 [node name="RightHand" type="XRNode3D" parent="XROrigin3D" unique_id=850570618]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26732922, 0, 0)
 tracker = &"/user/hand_tracker/right"
@@ -27,6 +36,12 @@ tracker = &"/user/hand_tracker/right"
 
 [node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/RightHand/RightHandHumanoid2/RightHandHumanoid/Skeleton3D" parent_id_path=PackedInt32Array(998918230, 1699381656) index="1" unique_id=839675067]
 hand_tracker = &"/user/hand_tracker/right"
+
+[node name="MenuPointer" type="Area3D" parent="XROrigin3D/RightHand" unique_id=1797854636 groups=["menu_pointer"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/RightHand/MenuPointer" unique_id=1771151024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008049011, 0.0041656494, -0.08135986)
+shape = SubResource("BoxShape3D_3sh0o")
 
 [editable path="XROrigin3D/LeftHand/LeftHandHumanoid2"]
 [editable path="XROrigin3D/RightHand/RightHandHumanoid2"]

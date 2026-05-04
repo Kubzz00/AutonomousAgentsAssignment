@@ -51,7 +51,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	# Keyboard fallback for desktop testing.
+	# Desktop fallback. Keep these for testing.
 	if Input.is_action_just_pressed("toggle_los"):
 		toggle_los()
 
@@ -70,13 +70,18 @@ func _process(_delta: float) -> void:
 # ======================
 func connect_button(button: Node) -> void:
 	if button == null:
+		push_warning("FloatingMenuController: button path missing.")
 		return
 
 	if button.has_signal("button_pressed"):
 		button.button_pressed.connect(_on_button_pressed)
+	else:
+		push_warning("FloatingMenuController: button has no button_pressed signal: " + button.name)
 
 
 func _on_button_pressed(action_name: String) -> void:
+	print("FloatingMenuController received action: ", action_name)
+
 	match action_name:
 		"toggle_los":
 			toggle_los()
@@ -91,7 +96,7 @@ func _on_button_pressed(action_name: String) -> void:
 			toggle_menu_content()
 
 		_:
-			push_warning("FloatingMenuController: Unknown action: " + action_name)
+			push_warning("FloatingMenuController: unknown action: " + action_name)
 
 
 # ======================
@@ -159,7 +164,6 @@ func set_state_markers_visible_recursive(node: Node, value: bool) -> void:
 
 
 func apply_menu_content_visibility() -> void:
-	# Hide main menu content.
 	if menu_title != null:
 		menu_title.visible = menu_content_visible
 
@@ -172,8 +176,7 @@ func apply_menu_content_visibility() -> void:
 	if reset_button != null and reset_button is Node3D:
 		reset_button.visible = menu_content_visible
 
-	# IMPORTANT:
-	# HideMenuButton always stays visible so the menu can be shown again.
+	# Hide/Show button must always remain visible.
 	if hide_menu_button != null and hide_menu_button is Node3D:
 		hide_menu_button.visible = true
 
