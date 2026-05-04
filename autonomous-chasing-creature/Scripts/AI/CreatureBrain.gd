@@ -3,6 +3,15 @@ extends CharacterBody3D
 @export var target_path: NodePath
 
 # ======================
+# ANIMATION
+# ======================
+@export var animation_player_path: NodePath
+@export var idle_animation: String = "Armature|Idle"
+@export var walk_animation: String = "Armature|Walk"
+@export var run_animation: String = "Armature|Running_Crawl"
+@export var catch_animation: String = "Armature|Attack"
+
+# ======================
 # MOVEMENT
 # ======================
 @export var walk_speed: float = 0.4
@@ -12,7 +21,7 @@ extends CharacterBody3D
 @export var gravity: float = 9.8
 
 # Catching
-@export var catch_distance: float = 0.55
+@export var catch_distance: float = 0.4
 
 # ======================
 # PARK BOUNDS
@@ -49,12 +58,16 @@ enum State {
 var state: State = State.WANDER
 
 var target: Node3D = null
+var animation_player: AnimationPlayer = null
+
 var can_see_player: bool = false
 var has_caught_player: bool = false
 
 var state_timer: float = 0.0
 var move_direction: Vector3 = Vector3.ZERO
 var desired_direction: Vector3 = Vector3.ZERO
+
+var current_animation: String = ""
 
 @onready var los_debug_line: MeshInstance3D = $LOSDebugLine
 
@@ -65,6 +78,8 @@ var los_blocked_material := StandardMaterial3D.new()
 
 func _ready() -> void:
 	randomize()
+
+	animation_player = get_node_or_null(animation_player_path)
 
 	los_seen_material.albedo_color = Color(0.0, 1.0, 0.0, 1.0)
 	los_blocked_material.albedo_color = Color(1.0, 0.0, 0.0, 1.0)
@@ -82,13 +97,17 @@ func _physics_process(delta: float) -> void:
 
 	if has_caught_player:
 		state = State.CATCH
+		play_state_animation()
+
 		velocity.x = move_toward(velocity.x, 0.0, acceleration * delta)
 		velocity.z = move_toward(velocity.z, 0.0, acceleration * delta)
+
 		apply_gravity(delta)
 		move_and_slide()
 
 		if debug_los:
 			update_los_debug_line()
+
 		return
 
 	var desired_velocity := Vector3.ZERO
@@ -127,6 +146,8 @@ func _physics_process(delta: float) -> void:
 		State.CATCH:
 			desired_velocity = Vector3.ZERO
 
+	play_state_animation()
+
 	velocity.x = move_toward(velocity.x, desired_velocity.x, acceleration * delta)
 	velocity.z = move_toward(velocity.z, desired_velocity.z, acceleration * delta)
 
@@ -140,11 +161,52 @@ func _physics_process(delta: float) -> void:
 
 
 # ======================
+# ANIMATION
+# ======================
+func play_state_animation() -> void:
+	if animation_player == null:
+		return
+
+	var desired_animation := idle_animation
+
+	match state:
+		State.IDLE:
+			desired_animation = idle_animation
+		State.WANDER:
+			desired_animation = walk_animation
+		State.CHASE:
+			desired_animation = run_animation
+		State.CATCH:
+			desired_animation = catch_animation
+
+	play_animation(desired_animation)
+
+
+func play_animation(animation_name: String) -> void:
+	if animation_player == null:
+		return
+
+	if animation_name == "":
+		return
+
+	if current_animation == animation_name:
+		return
+
+	if not animation_player.has_animation(animation_name):
+		push_warning("Creature animation not found: " + animation_name)
+		return
+
+	current_animation = animation_name
+	animation_player.play(animation_name)
+
+
+# ======================
 # STATE SWITCHING
 # ======================
 func switch_to_idle() -> void:
 	state = State.IDLE
 	state_timer = randf_range(idle_min_time, idle_max_time)
+	play_state_animation()
 
 
 func switch_to_wander() -> void:
@@ -162,6 +224,8 @@ func switch_to_wander() -> void:
 
 	if move_direction.length() < 0.05:
 		move_direction = desired_direction
+
+	play_state_animation()
 
 
 # ======================
@@ -238,6 +302,7 @@ func catch_player() -> void:
 	has_caught_player = true
 	state = State.CATCH
 	velocity = Vector3.ZERO
+	play_state_animation()
 
 	if target != null and target.has_method("on_caught"):
 		target.on_caught()
@@ -367,9 +432,6 @@ func update_los_debug_line() -> void:
 	var start_local := los_debug_line.to_local(start_global)
 	var end_local := los_debug_line.to_local(end_global)
 
-	los_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
-	los_mesh.surface_add_vertex(start_local)
-	los_mesh.surface_end()
 	los_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
 	los_mesh.surface_add_vertex(start_local)
 	los_mesh.surface_add_vertex(end_local)
