@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://byeyfbl8vycck" path="res://Assests/Models/Obstacles/Bush.glb" id="6_jw32o"]
 [ext_resource type="Script" uid="uid://bqkydjpibcosr" path="res://Scripts/Debug/DebugOverlay.gd" id="11_grg3l"]
 [ext_resource type="Script" uid="uid://chpq1jluw4q08" path="res://Scripts/Systems/FloatingMenuController.gd" id="12_1p5hy"]
+[ext_resource type="Script" uid="uid://co0m8ffpa5pvv" path="res://Scripts/AI/BoidManager.gd" id="12_erwvk"]
 [ext_resource type="AudioStream" uid="uid://btun162b1g28a" path="res://Assests/Audio/Ambience/ambience.wav" id="13_frkhe"]
 [ext_resource type="Script" uid="uid://bypglxfr5bc3o" path="res://Scripts/Systems/FloatingMenuButton.gd" id="13_h1m7h"]
 
@@ -56,17 +57,17 @@ size = Vector3(0.19799805, 0.20092773, 0.19995117)
 
 [sub_resource type="BoxMesh" id="BoxMesh_h1m7h"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_idj7w"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h1m7h"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 
-[sub_resource type="Sky" id="Sky_kln2b"]
-sky_material = SubResource("ProceduralSkyMaterial_idj7w")
+[sub_resource type="Sky" id="Sky_erwvk"]
+sky_material = SubResource("ProceduralSkyMaterial_h1m7h")
 
-[sub_resource type="Environment" id="Environment_rgh2o"]
+[sub_resource type="Environment" id="Environment_2w5on"]
 background_mode = 2
 background_color = Color(0, 0, 0, 0)
-sky = SubResource("Sky_kln2b")
+sky = SubResource("Sky_erwvk")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -674,6 +675,14 @@ billboard = 1
 outline_modulate = Color(0, 0.40455505, 0, 1)
 text = "."
 
+[node name="BoidManager" type="Node3D" parent="ArenaRotator/Park" unique_id=411887475]
+script = ExtResource("12_erwvk")
+boid_count = 15
+boid_color = Color(0.68862945, 0.49668628, 0.0713793, 1)
+
+[node name="BoidSpawnArea" type="Marker3D" parent="ArenaRotator/Park/BoidManager" unique_id=887964379]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4346685, 0)
+
 [node name="FloatingMenu" type="Node3D" parent="." unique_id=2080642437]
 transform = Transform3D(-2.1855694e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -2.1855694e-08, 0.036575675, 7.1263733, 3.493565)
 script = ExtResource("12_1p5hy")
@@ -756,11 +765,11 @@ mesh = SubResource("BoxMesh_h1m7h")
 text = "Menu"
 font_size = 23
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1068983022]
-environment = SubResource("Environment_rgh2o")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1950438522]
+environment = SubResource("Environment_2w5on")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2105999343]
-transform = Transform3D(1, 0, 0, 0, 0.03264927, 0.9994669, 0, -0.9994669, 0.03264927, 0, 4.085877, 0)
+transform = Transform3D(1, 0, 0, 0, 0.03264927, 0.9994669, 0, -0.9994669, 0.03264927, 0, 7.8428135, -1.1159382)
 
 [node name="StartXR" parent="." unique_id=1297519848 instance=ExtResource("2_idj7w")]
 
