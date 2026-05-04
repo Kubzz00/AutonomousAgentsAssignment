@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dv2s2j1rnufnr" path="res://Scripts/AI/CreatureBrain.gd" id="1_bmkl7"]
 [ext_resource type="PackedScene" uid="uid://xsaolxpxmntk" path="res://Assests/Models/Creature/CreatureBase.glb" id="2_bmkl7"]
+[ext_resource type="Script" uid="uid://dtndveqv4h3gp" path="res://Scripts/Systems/StateVisualController.gd" id="3_qtvqc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bmkl7"]
 radius = 0.044921875
@@ -94,8 +95,14 @@ target_position = Vector3(0, 0, -1)
 
 [node name="LOSDebugLine" type="MeshInstance3D" parent="." unique_id=1046526982]
 
-[node name="StateMaker" type="MeshInstance3D" parent="." unique_id=2113923947]
+[node name="StateMarker" type="MeshInstance3D" parent="." unique_id=2113923947]
 transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0.46409184, 0)
 mesh = SubResource("SphereMesh_bmkl7")
+script = ExtResource("3_qtvqc")
+agent_path = NodePath("..")
+marker_path = NodePath(".")
+alert_color = Color(0.8098418, 0.42690316, 0, 1)
+caught_color = Color(0.8480474, 0.008824629, 0.061758295, 1)
+catch_color = Color(0.9242653, 0, 0.13590527, 1)
 
 [editable path="ModelHolder/CreatureBase"]

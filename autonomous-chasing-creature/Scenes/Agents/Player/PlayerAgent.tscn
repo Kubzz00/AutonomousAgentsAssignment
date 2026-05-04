@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bjiblehuvvb4y" path="res://Assests/Models/Player/PlayerIdle.glb" id="2_c75jm"]
 [ext_resource type="Script" uid="uid://cxwpjexvqo4lc" path="res://Scripts/AI/PlayerBrain.gd" id="2_o2x2e"]
+[ext_resource type="Script" uid="uid://dtndveqv4h3gp" path="res://Scripts/Systems/StateVisualController.gd" id="3_c75jm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_o2x2e"]
 radius = 0.045410156
@@ -104,5 +105,10 @@ transform = Transform3D(1, -1.2749048e-09, -6.794929e-05, -6.7948306e-05, 0.0053
 [node name="StateMarker" type="MeshInstance3D" parent="." unique_id=879968611]
 transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0.44370845, 0)
 mesh = SubResource("SphereMesh_o2x2e")
+script = ExtResource("3_c75jm")
+agent_path = NodePath("..")
+marker_path = NodePath(".")
+alert_color = Color(0.8341391, 0.40512738, 5.7756904e-07, 1)
+caught_color = Color(0.84968925, 0, 0.039439972, 1)
 
 [editable path="ModelHolder/PlayerModel"]
